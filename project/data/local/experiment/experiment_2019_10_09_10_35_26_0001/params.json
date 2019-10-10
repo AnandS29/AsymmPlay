@@ -1,0 +1,20 @@
+{
+  "args_data": "gASVagQAAAAAAACMF2Nsb3VkcGlja2xlLmNsb3VkcGlja2xllIwOX2ZpbGxfZnVuY3Rpb26Uk5QoaACMD19tYWtlX3NrZWxfZnVuY5STlGgAjA1fYnVpbHRpbl90eXBllJOUjAhDb2RlVHlwZZSFlFKUKEsBSwBLB0sJS0dDcHQAfABkAY0Bj1x9AnQBZAJkA40BfQN0AmQEfANqA2QFZAaNA30EdAR8A2oDZAeNAX0FdAV8A2oDfAR8BWQIZAlkCmQLjQZ9BnwCoAZ8BnwDoQIBAHwCagdkCGQMZA2NAgEAVwBkDlEAUgBYAGQOUwCUKIwJUnVuIHRhc2sulIwPc25hcHNob3RfY29uZmlnlIWUjBlNaW5pR3JpZC1Eb29yS2V5LTE2eDE2LXYwlIwIZW52X25hbWWUhZSMBnBvbGljeZRLIEsghpSMBG5hbWWUjAhlbnZfc3BlY5SMDGhpZGRlbl9zaXplc5SHlGgUhZRLZEc/764UeuFHrkc/hHrhR64UeyhoFGgRjAhiYXNlbGluZZSMD21heF9wYXRoX2xlbmd0aJSMCGRpc2NvdW50lIwLbWF4X2tsX3N0ZXCUdJRNoA+MCG5fZXBvY2hzlIwKYmF0Y2hfc2l6ZZSGlE50lCiMDUxvY2FsVEZSdW5uZXKUjAVUZkVudpSMFENhdGVnb3JpY2FsTUxQUG9saWN5lIwEc3BlY5SMFUxpbmVhckZlYXR1cmVCYXNlbGluZZSMBFRSUE+UjAVzZXR1cJSMBXRyYWlulHSUKGgMjAFflIwGcnVubmVylIwDZW52lGgRaBiMBGFsZ2+UdJSMF2dhcmFnZV9taW5pZ3JpZF90ZXN0LnB5lIwIcnVuX3Rhc2uUSxVDHAACDAEKAgQBBAEIAgwCBgECAQIBAgECAQgCDAGUKSl0lFKUSv////99lCiMC19fcGFja2FnZV9flE6MCF9fbmFtZV9flIwIX19tYWluX1+UjAhfX2ZpbGVfX5SMF2dhcmFnZV9taW5pZ3JpZF90ZXN0LnB5lHWHlFKUfZQojAdnbG9iYWxzlH2UKGghjCRnYXJhZ2UudGYuZXhwZXJpbWVudC5sb2NhbF90Zl9ydW5uZXKUaCGTlGgijBNnYXJhZ2UudGYuZW52cy5iYXNllGgik5RoJowUZ2FyYWdlLnRmLmFsZ29zLnRycG+UaCaTlGgjjClnYXJhZ2UudGYucG9saWNpZXMuY2F0ZWdvcmljYWxfbWxwX3BvbGljeZRoI5OUaCWMK2dhcmFnZS5ucC5iYXNlbGluZXMubGluZWFyX2ZlYXR1cmVfYmFzZWxpbmWUaCWTlHWMCGRlZmF1bHRzlE6MBGRpY3SUfZSMDmNsb3N1cmVfdmFsdWVzlE6MBm1vZHVsZZRoN2gTaDCMA2RvY5RoC4wXX2Nsb3VkcGlja2xlX3N1Ym1vZHVsZXOUXZSMC2Fubm90YXRpb25zlH2UjAhxdWFsbmFtZZRoMIwKa3dkZWZhdWx0c5ROdXRSLg==",
+  "exp_name": "experiment_2019_10_09_10_35_26_0001",
+  "json_args": {},
+  "log_dir": "/Users/anandsranjan/Desktop/cs285/project/data/local/experiment/experiment_2019_10_09_10_35_26_0001",
+  "log_tabular_only": false,
+  "n_parallel": 1,
+  "params_log_file": "params.json",
+  "plot": false,
+  "resume_from_dir": null,
+  "resume_from_epoch": null,
+  "seed": 1,
+  "snapshot_gap": 1,
+  "snapshot_mode": "last",
+  "tabular_log_file": "progress.csv",
+  "tensorboard_step_key": null,
+  "text_log_file": "debug.log",
+  "variant_data": "gAN9cQBYCAAAAGV4cF9uYW1lcQFYIwAAAGV4cGVyaW1lbnRfMjAxOV8xMF8wOV8xMF8zNV8yNl8wMDAxcQJzLg==",
+  "variant_log_file": "variant.json"
+}

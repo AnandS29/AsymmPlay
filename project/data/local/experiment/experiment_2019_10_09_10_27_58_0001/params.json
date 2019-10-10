@@ -1,0 +1,20 @@
+{
+  "args_data": "gASVAQQAAAAAAACMF2Nsb3VkcGlja2xlLmNsb3VkcGlja2xllIwOX2ZpbGxfZnVuY3Rpb26Uk5QoaACMD19tYWtlX3NrZWxfZnVuY5STlGgAjA1fYnVpbHRpbl90eXBllJOUjAhDb2RlVHlwZZSFlFKUKEsASwBLBUsLS0dDTHQAZAFkAo0BfQF0AWQDfAFqAmQEZAWNA30CdAN8AWoCZAaNAX0DdAR8AXwCfANkB2QIZAhkCWQKZAtkDI0JfQR8BKAFoQABAGQNUwCUKIwxV3JhcCBUUlBPIHRyYWluaW5nIHRhc2sgaW4gdGhlIHJ1bl90YXNrIGZ1bmN0aW9uLpSMC0NhcnRQb2xlLXYxlIwIZW52X25hbWWUhZSMBnBvbGljeZRLIEsghpSMBG5hbWWUjAhlbnZfc3BlY5SMDGhpZGRlbl9zaXplc5SHlGgShZRNoA9LZEc/764UeuFHrkc/hHrhR64Ue4koaBJoD4wIYmFzZWxpbmWUjApiYXRjaF9zaXpllIwPbWF4X3BhdGhfbGVuZ3RolIwFbl9pdHKUjAhkaXNjb3VudJSMC21heF9rbF9zdGVwlIwEcGxvdJR0lE50lCiMBVRmRW52lIwUQ2F0ZWdvcmljYWxNTFBQb2xpY3mUjARzcGVjlIwVTGluZWFyRmVhdHVyZUJhc2VsaW5llIwEVFJQT5SMBXRyYWlulHSUKIwBX5SMA2VudpRoD2gWjARhbGdvlHSUjBdnYXJhZ2VfbWluaWdyaWRfdGVzdC5weZSMCHJ1bl90YXNrlEsKQx4AAgoCAgEOAgwCAgECAQIBAgECAQIBAgECAQIBCAGUKSl0lFKUSv////99lCiMC19fcGFja2FnZV9flE6MCF9fbmFtZV9flIwIX19tYWluX1+UjAhfX2ZpbGVfX5SMF2dhcmFnZV9taW5pZ3JpZF90ZXN0LnB5lHWHlFKUfZQojAdnbG9iYWxzlH2UKGgfjBNnYXJhZ2UudGYuZW52cy5iYXNllGgfk5RoIIwpZ2FyYWdlLnRmLnBvbGljaWVzLmNhdGVnb3JpY2FsX21scF9wb2xpY3mUaCCTlGgijCtnYXJhZ2UubnAuYmFzZWxpbmVzLmxpbmVhcl9mZWF0dXJlX2Jhc2VsaW5llGgik5RoI4wUZ2FyYWdlLnRmLmFsZ29zLnRycG+UaCOTlHWMCGRlZmF1bHRzlE6MBGRpY3SUfZSMDmNsb3N1cmVfdmFsdWVzlE6MBm1vZHVsZZRoMmgRaCuMA2RvY5RoC4wXX2Nsb3VkcGlja2xlX3N1Ym1vZHVsZXOUXZSMC2Fubm90YXRpb25zlH2UjAhxdWFsbmFtZZRoK4wKa3dkZWZhdWx0c5ROdXRSLg==",
+  "exp_name": "experiment_2019_10_09_10_27_58_0001",
+  "json_args": {},
+  "log_dir": "/Users/anandsranjan/Desktop/cs285/project/data/local/experiment/experiment_2019_10_09_10_27_58_0001",
+  "log_tabular_only": false,
+  "n_parallel": 1,
+  "params_log_file": "params.json",
+  "plot": false,
+  "resume_from_dir": null,
+  "resume_from_epoch": null,
+  "seed": 1,
+  "snapshot_gap": 1,
+  "snapshot_mode": "last",
+  "tabular_log_file": "progress.csv",
+  "tensorboard_step_key": null,
+  "text_log_file": "debug.log",
+  "variant_data": "gAN9cQBYCAAAAGV4cF9uYW1lcQFYIwAAAGV4cGVyaW1lbnRfMjAxOV8xMF8wOV8xMF8yN181OF8wMDAxcQJzLg==",
+  "variant_log_file": "variant.json"
+}

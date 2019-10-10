@@ -1,0 +1,20 @@
+{
+  "args_data": "gASV1QMAAAAAAACMF2Nsb3VkcGlja2xlLmNsb3VkcGlja2xllIwOX2ZpbGxfZnVuY3Rpb26Uk5QoaACMD19tYWtlX3NrZWxfZnVuY5STlGgAjA1fYnVpbHRpbl90eXBllJOUjAhDb2RlVHlwZZSFlFKUKEsASwBLBUsIS0dDRnQAZAFkAo0BfQF0AWQDfAFqAmQEZAWNA30CdAN8AWoCZAaNAX0DdAR8AXwCfANkB2QIZAlkCo0GfQR8BKAFoQABAGQLUwCUKIwxV3JhcCBUUlBPIHRyYWluaW5nIHRhc2sgaW4gdGhlIHJ1bl90YXNrIGZ1bmN0aW9uLpSMC0NhcnRQb2xlLXYxlIwIZW52X25hbWWUhZSMBnBvbGljeZRLIEsghpSMBG5hbWWUjAhlbnZfc3BlY5SMDGhpZGRlbl9zaXplc5SHlGgShZRLZEc/764UeuFHrkc/hHrhR64UeyhoEmgPjAhiYXNlbGluZZSMD21heF9wYXRoX2xlbmd0aJSMCGRpc2NvdW50lIwLbWF4X2tsX3N0ZXCUdJROdJQojAVUZkVudpSMFENhdGVnb3JpY2FsTUxQUG9saWN5lIwEc3BlY5SMFUxpbmVhckZlYXR1cmVCYXNlbGluZZSMBFRSUE+UjAV0cmFpbpR0lCiMAV+UjANlbnaUaA9oFowEYWxnb5R0lIwXZ2FyYWdlX21pbmlncmlkX3Rlc3QucHmUjAhydW5fdGFza5RLCkMYAAIKAgIBDgIMAgIBAgECAQIBAgECAQgBlCkpdJRSlEr/////fZQojAtfX3BhY2thZ2VfX5ROjAhfX25hbWVfX5SMCF9fbWFpbl9flIwIX19maWxlX1+UjBdnYXJhZ2VfbWluaWdyaWRfdGVzdC5weZR1h5RSlH2UKIwHZ2xvYmFsc5R9lChoIIwUZ2FyYWdlLnRmLmFsZ29zLnRycG+UaCCTlGgfjCtnYXJhZ2UubnAuYmFzZWxpbmVzLmxpbmVhcl9mZWF0dXJlX2Jhc2VsaW5llGgfk5RoHIwTZ2FyYWdlLnRmLmVudnMuYmFzZZRoHJOUaB2MKWdhcmFnZS50Zi5wb2xpY2llcy5jYXRlZ29yaWNhbF9tbHBfcG9saWN5lGgdk5R1jAhkZWZhdWx0c5ROjARkaWN0lH2UjA5jbG9zdXJlX3ZhbHVlc5ROjAZtb2R1bGWUaC9oEWgojANkb2OUaAuMF19jbG91ZHBpY2tsZV9zdWJtb2R1bGVzlF2UjAthbm5vdGF0aW9uc5R9lIwIcXVhbG5hbWWUaCiMCmt3ZGVmYXVsdHOUTnV0Ui4=",
+  "exp_name": "experiment_2019_10_09_10_29_35_0001",
+  "json_args": {},
+  "log_dir": "/Users/anandsranjan/Desktop/cs285/project/data/local/experiment/experiment_2019_10_09_10_29_35_0001",
+  "log_tabular_only": false,
+  "n_parallel": 1,
+  "params_log_file": "params.json",
+  "plot": false,
+  "resume_from_dir": null,
+  "resume_from_epoch": null,
+  "seed": 1,
+  "snapshot_gap": 1,
+  "snapshot_mode": "last",
+  "tabular_log_file": "progress.csv",
+  "tensorboard_step_key": null,
+  "text_log_file": "debug.log",
+  "variant_data": "gAN9cQBYCAAAAGV4cF9uYW1lcQFYIwAAAGV4cGVyaW1lbnRfMjAxOV8xMF8wOV8xMF8yOV8zNV8wMDAxcQJzLg==",
+  "variant_log_file": "variant.json"
+}

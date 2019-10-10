@@ -1,0 +1,416 @@
+2019-10-09 10:31:59 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | Obtaining samples...
+2019-10-09 10:31:59 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | Obtaining samples for iteration 0...
+2019-10-09 10:32:00 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | Logging diagnostics...
+2019-10-09 10:32:00 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | Optimizing policy...
+2019-10-09 10:32:00 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | Computing loss before
+2019-10-09 10:32:00 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | Computing KL before
+2019-10-09 10:32:00 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | Optimizing
+2019-10-09 10:32:00 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | Start CG optimization: #parameters: 1282, #inputs: 280, #subsample_inputs: 280
+2019-10-09 10:32:00 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | computing loss before
+2019-10-09 10:32:00 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | performing update
+2019-10-09 10:32:00 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | computing gradient
+2019-10-09 10:32:00 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | gradient computed
+2019-10-09 10:32:00 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | computing descent direction
+2019-10-09 10:32:01 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | descent direction computed
+2019-10-09 10:32:01 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | backtrack iters: 2
+2019-10-09 10:32:01 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | computing loss after
+2019-10-09 10:32:01 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | optimization finished
+2019-10-09 10:32:01 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | Computing KL after
+2019-10-09 10:32:01 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | Computing loss after
+2019-10-09 10:32:01 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | Fitting baseline...
+2019-10-09 10:32:01 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | Saving snapshot...
+2019-10-09 10:32:01 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | Saved
+2019-10-09 10:32:01 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | Time 1.52 s
+2019-10-09 10:32:01 | [experiment_2019_10_09_10_31_56_0001] epoch #0 | EpochTime 1.52 s
+---------------------------------------  -------------
+AverageDiscountedReturn                   13.2474
+AverageReturn                             14.2893
+Entropy                                    0.581804
+EnvExecTime                                0.0542164
+Extras/EpisodeRewardMean                  14.95
+Iteration                                  0
+LinearFeatureBaseline/ExplainedVariance    1.49341e-08
+MaxReturn                                 46
+MinReturn                                  8
+NumTrajs                                 280
+Perplexity                                 1.78926
+PolicyExecTime                             0.434265
+ProcessExecTime                            0.0230708
+StdReturn                                  5.55735
+policy/Entropy                             0.615774
+policy/KL                                  0.00830506
+policy/KLBefore                           -8.6869e-10
+policy/LossAfter                          -0.00888487
+policy/LossBefore                         -1.52875e-06
+policy/dLoss                               0.00888334
+---------------------------------------  -------------
+2019-10-09 10:32:01 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | Obtaining samples...
+2019-10-09 10:32:01 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | Obtaining samples for iteration 1...
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | Logging diagnostics...
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | Optimizing policy...
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | Computing loss before
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | Computing KL before
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | Optimizing
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | Start CG optimization: #parameters: 1282, #inputs: 275, #subsample_inputs: 275
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | computing loss before
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | performing update
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | computing gradient
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | gradient computed
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | computing descent direction
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | descent direction computed
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | backtrack iters: 1
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | computing loss after
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | optimization finished
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | Computing KL after
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | Computing loss after
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | Fitting baseline...
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | Saving snapshot...
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | Saved
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | Time 2.51 s
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #1 | EpochTime 0.99 s
+---------------------------------------  -------------
+AverageDiscountedReturn                   13.4758
+AverageReturn                             14.5636
+Entropy                                    0.613505
+EnvExecTime                                0.0579691
+Extras/EpisodeRewardMean                  14.83
+Iteration                                  1
+LinearFeatureBaseline/ExplainedVariance    0.461562
+MaxReturn                                 47
+MinReturn                                  8
+NumTrajs                                 275
+Perplexity                                 1.84689
+PolicyExecTime                             0.416116
+ProcessExecTime                            0.0239708
+StdReturn                                  5.78262
+policy/Entropy                             0.625451
+policy/KL                                  0.0098174
+policy/KLBefore                           -2.0146e-10
+policy/LossAfter                          -0.0453179
+policy/LossBefore                          2.50027e-09
+policy/dLoss                               0.0453179
+---------------------------------------  -------------
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | Obtaining samples...
+2019-10-09 10:32:02 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | Obtaining samples for iteration 2...
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | Logging diagnostics...
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | Optimizing policy...
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | Computing loss before
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | Computing KL before
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | Optimizing
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | Start CG optimization: #parameters: 1282, #inputs: 225, #subsample_inputs: 225
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | computing loss before
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | performing update
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | computing gradient
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | gradient computed
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | computing descent direction
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | descent direction computed
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | backtrack iters: 2
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | computing loss after
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | optimization finished
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | Computing KL after
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | Computing loss after
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | Fitting baseline...
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | Saving snapshot...
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | Saved
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | Time 3.41 s
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #2 | EpochTime 0.90 s
+---------------------------------------  -------------
+AverageDiscountedReturn                   16.0462
+AverageReturn                             17.8311
+Entropy                                    0.636357
+EnvExecTime                                0.0565531
+Extras/EpisodeRewardMean                  17.53
+Iteration                                  2
+LinearFeatureBaseline/ExplainedVariance    0.226772
+MaxReturn                                 75
+MinReturn                                  8
+NumTrajs                                 225
+Perplexity                                 1.88958
+PolicyExecTime                             0.414906
+ProcessExecTime                            0.0226557
+StdReturn                                  9.56605
+policy/Entropy                             0.65362
+policy/KL                                  0.00676265
+policy/KLBefore                           -2.40562e-10
+policy/LossAfter                          -0.030636
+policy/LossBefore                          1.37869e-08
+policy/dLoss                               0.030636
+---------------------------------------  -------------
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | Obtaining samples...
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | Obtaining samples for iteration 3...
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | Logging diagnostics...
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | Optimizing policy...
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | Computing loss before
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | Computing KL before
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | Optimizing
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | Start CG optimization: #parameters: 1282, #inputs: 174, #subsample_inputs: 174
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | computing loss before
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | performing update
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | computing gradient
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | gradient computed
+2019-10-09 10:32:03 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | computing descent direction
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | descent direction computed
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | backtrack iters: 1
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | computing loss after
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | optimization finished
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | Computing KL after
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | Computing loss after
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | Fitting baseline...
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | Saving snapshot...
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | Saved
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | Time 4.21 s
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #3 | EpochTime 0.80 s
+---------------------------------------  -------------
+AverageDiscountedReturn                   20.0957
+AverageReturn                             23.2931
+Entropy                                    0.659793
+EnvExecTime                                0.0557981
+Extras/EpisodeRewardMean                  25.08
+Iteration                                  3
+LinearFeatureBaseline/ExplainedVariance    0.223893
+MaxReturn                                 83
+MinReturn                                  8
+NumTrajs                                 174
+Perplexity                                 1.93439
+PolicyExecTime                             0.412604
+ProcessExecTime                            0.0214276
+StdReturn                                 14.4969
+policy/Entropy                             0.65594
+policy/KL                                  0.00737287
+policy/KLBefore                            2.28741e-11
+policy/LossAfter                          -0.0321284
+policy/LossBefore                         -2.78832e-08
+policy/dLoss                               0.0321284
+---------------------------------------  -------------
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | Obtaining samples...
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | Obtaining samples for iteration 4...
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | Logging diagnostics...
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | Optimizing policy...
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | Computing loss before
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | Computing KL before
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | Optimizing
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | Start CG optimization: #parameters: 1282, #inputs: 126, #subsample_inputs: 126
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | computing loss before
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | performing update
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | computing gradient
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | gradient computed
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | computing descent direction
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | descent direction computed
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | backtrack iters: 1
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | computing loss after
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | optimization finished
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | Computing KL after
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | Computing loss after
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | Fitting baseline...
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | Saving snapshot...
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | Saved
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | Time 4.93 s
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #4 | EpochTime 0.71 s
+---------------------------------------  -------------
+AverageDiscountedReturn                   26.0134
+AverageReturn                             32.2063
+Entropy                                    0.655573
+EnvExecTime                                0.0567281
+Extras/EpisodeRewardMean                  31.99
+Iteration                                  4
+LinearFeatureBaseline/ExplainedVariance    0.202824
+MaxReturn                                100
+MinReturn                                 10
+NumTrajs                                 126
+Perplexity                                 1.92625
+PolicyExecTime                             0.418066
+ProcessExecTime                            0.0206246
+StdReturn                                 22.1687
+policy/Entropy                             0.640271
+policy/KL                                  0.00984817
+policy/KLBefore                           -2.15455e-11
+policy/LossAfter                          -0.0348771
+policy/LossBefore                         -2.84216e-08
+policy/dLoss                               0.034877
+---------------------------------------  -------------
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | Obtaining samples...
+2019-10-09 10:32:04 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | Obtaining samples for iteration 5...
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | Logging diagnostics...
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | Optimizing policy...
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | Computing loss before
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | Computing KL before
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | Optimizing
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | Start CG optimization: #parameters: 1282, #inputs: 71, #subsample_inputs: 71
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | computing loss before
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | performing update
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | computing gradient
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | gradient computed
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | computing descent direction
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | descent direction computed
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | backtrack iters: 0
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | computing loss after
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | optimization finished
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | Computing KL after
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | Computing loss after
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | Fitting baseline...
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | Saving snapshot...
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | Saved
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | Time 5.56 s
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #5 | EpochTime 0.63 s
+---------------------------------------  -------------
+AverageDiscountedReturn                   41.2948
+AverageReturn                             57.4085
+Entropy                                    0.644902
+EnvExecTime                                0.0554373
+Extras/EpisodeRewardMean                  51.08
+Iteration                                  5
+LinearFeatureBaseline/ExplainedVariance    0.266221
+MaxReturn                                100
+MinReturn                                  9
+NumTrajs                                  71
+Perplexity                                 1.9058
+PolicyExecTime                             0.41231
+ProcessExecTime                            0.0191627
+StdReturn                                 29.8515
+policy/Entropy                             0.617002
+policy/KL                                  0.00902745
+policy/KLBefore                           -9.8777e-12
+policy/LossAfter                          -0.0289363
+policy/LossBefore                          8.08377e-08
+policy/dLoss                               0.0289363
+---------------------------------------  -------------
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | Obtaining samples...
+2019-10-09 10:32:05 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | Obtaining samples for iteration 6...
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | Logging diagnostics...
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | Optimizing policy...
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | Computing loss before
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | Computing KL before
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | Optimizing
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | Start CG optimization: #parameters: 1282, #inputs: 53, #subsample_inputs: 53
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | computing loss before
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | performing update
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | computing gradient
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | gradient computed
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | computing descent direction
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | descent direction computed
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | backtrack iters: 0
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | computing loss after
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | optimization finished
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | Computing KL after
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | Computing loss after
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | Fitting baseline...
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | Saving snapshot...
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | Saved
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | Time 6.18 s
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #6 | EpochTime 0.62 s
+---------------------------------------  -------------
+AverageDiscountedReturn                   52.1072
+AverageReturn                             77.6981
+Entropy                                    0.620595
+EnvExecTime                                0.055887
+Extras/EpisodeRewardMean                  69.62
+Iteration                                  6
+LinearFeatureBaseline/ExplainedVariance    0.53893
+MaxReturn                                100
+MinReturn                                 18
+NumTrajs                                  53
+Perplexity                                 1.86003
+PolicyExecTime                             0.428861
+ProcessExecTime                            0.0191135
+StdReturn                                 28.49
+policy/Entropy                             0.612265
+policy/KL                                  0.00619181
+policy/KLBefore                            2.20995e-10
+policy/LossAfter                          -0.0189342
+policy/LossBefore                          2.11902e-08
+policy/dLoss                               0.0189342
+---------------------------------------  -------------
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | Obtaining samples...
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | Obtaining samples for iteration 7...
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | Logging diagnostics...
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | Optimizing policy...
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | Computing loss before
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | Computing KL before
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | Optimizing
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | Start CG optimization: #parameters: 1282, #inputs: 45, #subsample_inputs: 45
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | computing loss before
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | performing update
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | computing gradient
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | gradient computed
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | computing descent direction
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | descent direction computed
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | backtrack iters: 0
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | computing loss after
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | optimization finished
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | Computing KL after
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | Computing loss after
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | Fitting baseline...
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | Saving snapshot...
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | Saved
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | Time 6.78 s
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #7 | EpochTime 0.59 s
+---------------------------------------  -------------
+AverageDiscountedReturn                   58.1269
+AverageReturn                             89.5778
+Entropy                                    0.60359
+EnvExecTime                                0.0542986
+Extras/EpisodeRewardMean                  82.81
+Iteration                                  7
+LinearFeatureBaseline/ExplainedVariance    0.747838
+MaxReturn                                100
+MinReturn                                 23
+NumTrajs                                  45
+Perplexity                                 1.82867
+PolicyExecTime                             0.418145
+ProcessExecTime                            0.0185411
+StdReturn                                 22.5403
+policy/Entropy                             0.599765
+policy/KL                                  0.00532594
+policy/KLBefore                           -5.79526e-11
+policy/LossAfter                          -0.00696991
+policy/LossBefore                          4.70804e-08
+policy/dLoss                               0.00696995
+---------------------------------------  -------------
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | Obtaining samples...
+2019-10-09 10:32:06 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | Obtaining samples for iteration 8...
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | Logging diagnostics...
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | Optimizing policy...
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | Computing loss before
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | Computing KL before
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | Optimizing
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | Start CG optimization: #parameters: 1282, #inputs: 44, #subsample_inputs: 44
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | computing loss before
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | performing update
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | computing gradient
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | gradient computed
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | computing descent direction
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | descent direction computed
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | backtrack iters: 0
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | computing loss after
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | optimization finished
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | Computing KL after
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | Computing loss after
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | Fitting baseline...
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | Saving snapshot...
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | Saved
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | Time 7.39 s
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #8 | EpochTime 0.60 s
+---------------------------------------  -------------
+AverageDiscountedReturn                   59.1334
+AverageReturn                             91.1364
+Entropy                                    0.603546
+EnvExecTime                                0.0543361
+Extras/EpisodeRewardMean                  88.56
+Iteration                                  8
+LinearFeatureBaseline/ExplainedVariance    0.812588
+MaxReturn                                100
+MinReturn                                 17
+NumTrajs                                  44
+Perplexity                                 1.82859
+PolicyExecTime                             0.421359
+ProcessExecTime                            0.018456
+StdReturn                                 19.0198
+policy/Entropy                             0.578939
+policy/KL                                  0.00633019
+policy/KLBefore                            4.93464e-10
+policy/LossAfter                          -0.0131143
+policy/LossBefore                          3.56736e-10
+policy/dLoss                               0.0131143
+---------------------------------------  -------------
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #9 | Obtaining samples...
+2019-10-09 10:32:07 | [experiment_2019_10_09_10_31_56_0001] epoch #9 | Obtaining samples for iteration 9...

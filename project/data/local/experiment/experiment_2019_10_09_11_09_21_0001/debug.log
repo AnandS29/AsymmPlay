@@ -1,0 +1,46 @@
+2019-10-09 11:09:26 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | Obtaining samples...
+2019-10-09 11:09:26 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | Obtaining samples for iteration 0...
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | Logging diagnostics...
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | Optimizing policy...
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | Computing loss before
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | Computing KL before
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | Optimizing
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | Start CG optimization: #parameters: 1282, #inputs: 256, #subsample_inputs: 256
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | computing loss before
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | performing update
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | computing gradient
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | gradient computed
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | computing descent direction
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | descent direction computed
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | backtrack iters: 6
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | computing loss after
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | optimization finished
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | Computing KL after
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | Computing loss after
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | Fitting baseline...
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | Saving snapshot...
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | Saved
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | Time 1.36 s
+2019-10-09 11:09:27 | [experiment_2019_10_09_11_09_21_0001] epoch #0 | EpochTime 1.36 s
+---------------------------------------  -------------
+AverageDiscountedReturn                   14.4092
+AverageReturn                             15.6875
+Entropy                                    0.623331
+EnvExecTime                                0.050101
+Extras/EpisodeRewardMean                  15.86
+Iteration                                  0
+LinearFeatureBaseline/ExplainedVariance    3.0508e-08
+MaxReturn                                 45
+MinReturn                                  8
+NumTrajs                                 256
+Perplexity                                 1.86513
+PolicyExecTime                             0.396055
+ProcessExecTime                            0.0217419
+StdReturn                                  6.52729
+policy/Entropy                             0.663417
+policy/KL                                  0.00980993
+policy/KLBefore                            1.53695e-11
+policy/LossAfter                          -0.014043
+policy/LossBefore                         -1.3018e-06
+policy/dLoss                               0.0140417
+---------------------------------------  -------------
