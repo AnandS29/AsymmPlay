@@ -9,7 +9,7 @@ from garage.tf.policies import CategoricalMLPPolicy
 def run_task(snapshot_config, *_):
     """Run task."""
     with LocalTFRunner(snapshot_config=snapshot_config) as runner:
-        env = TfEnv(env_name='CartPole-v1')
+        env = TfEnv(env_name='CartPole-v1') # MiniGrid-DoorKey-16x16-v0
 
         policy = CategoricalMLPPolicy(name='policy',
                                       env_spec=env.spec,
