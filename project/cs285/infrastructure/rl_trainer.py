@@ -49,10 +49,16 @@ class RL_Trainer(object):
         #self.env = gym.make(self.params['env_name'])
         #self.env.seed(seed)
 
+        eval_seed = 10
+
         self.env_teacher, self.env_student = gym.make("MiniGrid-TeacherEnv-5x5-v0"), gym.make("MiniGrid-StudentEnv-5x5-v0")
 
-        self.eval_env = gym.make("MiniGrid-DoorKey-5x5-v0")
-        self.eval_env.seed(seed)
+        self.eval_env = gym.make("MiniGrid-StudentEnv-5x5-v0")
+        # env_student = gym.make("MiniGrid-StudentEnv-5x5-v0")
+        self.eval_env.goal_pos = [3,1]
+        # # env_student.teacher_step_count = teacher_step_count
+        self.eval_env.setup()
+        self.eval_env.seed(eval_seed)
 
         # Maximum length for episodes
         self.params['ep_len'] = self.params['ep_len'] or self.env_teacher.spec.max_episode_steps

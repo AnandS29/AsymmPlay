@@ -179,7 +179,8 @@ def sample_trajectory_eval(env, policy, max_path_length, render=False, render_mo
 
         if rollout_done:
             break
-
+    gamma = 1
+    reward = [-1*gamma*float(r) for r in rewards]
     return Path(obs, image_obs, acs, rewards, next_obs, terminals)
 
 def sample_n_trajectories(env, policy, ntraj, max_path_length, render=False, render_mode=('rgb_array')):
