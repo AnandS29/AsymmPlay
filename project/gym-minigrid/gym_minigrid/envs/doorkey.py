@@ -239,7 +239,6 @@ class TeacherEnv(DoorKeyEnv):
         self.action_space = spaces.Discrete(len(self.actions))
         self.gamma = 1
         self.observation_space = spaces.Box(low=0, high=100, shape=(7*7*3,))
-        self.max_time = 100
         self.initial_pos = self.agent_pos[:]
 
     def step(self, action):
@@ -306,7 +305,7 @@ class TeacherEnv(DoorKeyEnv):
 
         obs = self.gen_obs()
 
-        return obs, (0 if not done else self.step_count), done, {"start": self.initial_pos, "end": self.agent_pos[:], "teacher_step_count": self.step_count}
+        return obs, (0 if done else self.step_count), done, {"start": self.initial_pos, "end": self.agent_pos[:], "teacher_step_count": self.step_count}
 
 class TTestEnv16x16(TTestEnv):
     def __init__(self):
@@ -314,11 +313,11 @@ class TTestEnv16x16(TTestEnv):
 
 class StudentEnv5x5(StudentEnv):
     def __init__(self):
-        super().__init__(size=5)
+        super().__init__(size=16)
 
 class TeacherEnv5x5(TeacherEnv):
     def __init__(self):
-        super().__init__(size=5)
+        super().__init__(size=16)
 
 register(
     id='MiniGrid-TTestEnv-16x16-v0',

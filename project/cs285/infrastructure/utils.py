@@ -20,19 +20,6 @@ def sample_trajectory(env_teacher, env_student, policy_teacher, policy_student, 
     steps = 0
     start, end, teacher_step_count = None, None, None
     while True:
-
-        # render image of the simulated env
-        # if render:
-        #     if 'rgb_array' in render_mode:
-        #         if hasattr(env, 'sim'):
-        #             image_obs.append(env.sim.render(camera_name='track', height=500, width=500)[::-1])
-        #         else:
-        #             image_obs.append(env.render(mode=render_mode))
-        #     if 'human' in render_mode:
-        #         env_teacher.render(mode=render_mode)
-        #         time.sleep(env.model.opt.timestep)
-
-        # use the most recent ob to decide what to do
         obs_t.append(ob)
         ac = policy_teacher.get_action(ob) # HINT: query the policy's get_action function
         ac = ac[0]
@@ -138,26 +125,17 @@ def sample_trajectory_eval(env, policy, max_path_length, render=False, render_mo
 
     # initialize env for the beginning of a new rollout
     ob = env.reset() # TODO: GETTHIS from HW1
-
+    env.teacher_step_count = 0
     # init vars
     obs, acs, rewards, next_obs, terminals, image_obs = [], [], [], [], [], []
     steps = 0
+    p = np.random.random()
     while True:
 
         # render image of the simulated env
-        if render:
-            if 'rgb_array' in render_mode:
-                if hasattr(env, 'sim'):
-                    if 'track' in env.env.model.camera_names:
-                        image_obs.append(env.sim.render(camera_name='track', height=500, width=500)[::-1])
-                    else:
-                        image_obs.append(env.sim.render(height=500, width=500)[::-1])
-                else:
-                    image_obs.append(env.render(mode=render_mode))
-            if 'human' in render_mode:
-                env.render(mode=render_mode)
-                time.sleep(env.model.opt.timestep)
-
+        if p <= 0.2:
+            env.render()
+            time.sleep(0.05)
         # use the most recent ob to decide what to do
         obs.append(ob)
         ac = policy.get_action(ob) # TODO: GETTHIS from HW1
@@ -180,7 +158,7 @@ def sample_trajectory_eval(env, policy, max_path_length, render=False, render_mo
         if rollout_done:
             break
     gamma = 1
-    reward = [-1*gamma*float(r) for r in rewards]
+    rewards = [-1*gamma*float(r) for r in rewards]
     return Path(obs, image_obs, acs, rewards, next_obs, terminals)
 
 def sample_n_trajectories(env, policy, ntraj, max_path_length, render=False, render_mode=('rgb_array')):
