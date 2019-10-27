@@ -61,6 +61,8 @@ class StudentEnv(DoorKeyEnv):
         self.goal_pos = None
         self.teacher_step_count = None
         self.size = size
+        self.agent_view_size=100
+        self.observation_space = spaces.Box(low=0, high=255, shape=(self.agent_view_size*self.agent_view_size*3,))
 
     def setup(self):
         super().__init__(size=self.size)
@@ -238,7 +240,8 @@ class TeacherEnv(DoorKeyEnv):
         super().__init__(size=size)
         self.action_space = spaces.Discrete(len(self.actions))
         self.gamma = 1
-        self.observation_space = spaces.Box(low=0, high=100, shape=(7*7*3,))
+        self.agent_view_size=3
+        self.observation_space = spaces.Box(low=0, high=255, shape=(self.agent_view_size*self.agent_view_size*3,))
         self.initial_pos = self.agent_pos[:]
 
     def step(self, action):
@@ -305,7 +308,7 @@ class TeacherEnv(DoorKeyEnv):
 
         obs = self.gen_obs()
 
-        return obs, (0 if done else self.step_count), done, {"start": self.initial_pos, "end": self.agent_pos[:], "teacher_step_count": self.step_count}
+        return obs, (0 if not done else self.step_count), done, {"start": self.initial_pos, "end": self.agent_pos[:], "teacher_step_count": self.step_count}
 
 class TTestEnv16x16(TTestEnv):
     def __init__(self):

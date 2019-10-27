@@ -55,7 +55,7 @@ class RL_Trainer(object):
 
         self.eval_env = gym.make("MiniGrid-StudentEnv-5x5-v0")
         # env_student = gym.make("MiniGrid-StudentEnv-5x5-v0")
-        self.eval_env.goal_pos = [12,12]
+        self.eval_env.goal_pos = [5,5]
         # # env_student.teacher_step_count = teacher_step_count
         self.eval_env.setup()
         self.eval_env.seed(eval_seed)

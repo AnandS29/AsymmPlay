@@ -10,7 +10,7 @@ def sample_trajectory(env_teacher, env_student, policy_teacher, policy_student, 
     # initialize env for the beginning of a new rollout
     env_teacher.seed(seed)
     ob = env_teacher.reset() # HINT: should be the output of resetting the env
-
+    env_student.seed(seed)
     env_teacher.max_steps = max_path_length
     env_student.max_steps = max_path_length
 
@@ -47,7 +47,7 @@ def sample_trajectory(env_teacher, env_student, policy_teacher, policy_student, 
     env_student.setup()
     env_student.seed(seed)
     ob = env_student.reset() # HINT: should be the output of resetting the env
-
+    env_student.seed(seed)
     # init vars
     steps = 0
     while True:
@@ -125,6 +125,7 @@ def sample_trajectory_eval(env, policy, max_path_length, render=False, render_mo
 
     # initialize env for the beginning of a new rollout
     ob = env.reset() # TODO: GETTHIS from HW1
+    env.seed(10)
     env.teacher_step_count = 0
     # init vars
     obs, acs, rewards, next_obs, terminals, image_obs = [], [], [], [], [], []
@@ -133,7 +134,7 @@ def sample_trajectory_eval(env, policy, max_path_length, render=False, render_mo
     while True:
 
         # render image of the simulated env
-        if p <= 0.2:
+        if p <= 0.2 and False:
             env.render()
             time.sleep(0.05)
         # use the most recent ob to decide what to do

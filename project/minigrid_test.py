@@ -32,7 +32,7 @@ seed=10
 env_teacher = gym.make("MiniGrid-TeacherEnv-5x5-v0")
 env_teacher.seed(seed)
 ob = env_teacher.reset() # HINT: should be the output of resetting the env
-max_path_length = 10000
+max_path_length = 100
 env_teacher.max_steps = max_path_length
 
 # init vars
@@ -60,43 +60,42 @@ steps = 0
 #         start, end, teacher_step_count = info["start"], info["end"], info["teacher_step_count"]
 #         break
 # env_teacher.close()
-env_student = gym.make("MiniGrid-StudentEnv-5x5-v0")
-# env_student = gym.make("MiniGrid-StudentEnv-5x5-v0")
-env_student.goal_pos = [3,1]
-# # env_student.teacher_step_count = teacher_step_count
-env_student.setup()
-env_student.seed(seed)
-ob = env_student.reset() # HINT: should be the output of resetting the env
+for i in range(4):
+    env_student = gym.make("MiniGrid-StudentEnv-5x5-v0")
+    # env_student = gym.make("MiniGrid-StudentEnv-5x5-v0")
+    env_student.goal_pos = [3,1]
+    # # env_student.teacher_step_count = teacher_step_count
+    env_student.setup()
+    env_student.seed(seed)
+    ob = env_student.reset() # HINT: should be the output of resetting the env
 
-# init vars
-steps = 0
-print("Student")
-while True:
-    obs_t.append(ob)
-    env_student.render()
-    ac = env_student.action_space.sample() # HINT: query the policy's get_action function
-    print(ac,end=",")
-    acs_t.append(ac)
+    # init vars
+    steps = 0
+    print("Student")
+    while True:
+        obs_t.append(ob)
+        env_student.render()
+        ac = env_student.action_space.sample() # HINT: query the policy's get_action function
+        print(ac,end=",")
+        acs_t.append(ac)
 
-    # take that action and record results
-    ob, rew, done, info = env_student.step(ac)
+        # take that action and record results
+        ob, rew, done, info = env_student.step(ac)
 
-    # record result of taking that action
-    steps += 1
-    next_obs_s.append(ob)
-    rewards_s.append(rew)
+        # record result of taking that action
+        steps += 1
+        next_obs_s.append(ob)
+        rewards_s.append(rew)
 
-    # TODO end the rollout if the rollout ended
-    # HINT: rollout can end due to done, or due to max_path_length
-    rollout_done = (1 if (steps>=max_path_length or done) else 0) # HINT: this is either 0 or 1
-    terminals_s.append(rollout_done)
+        # TODO end the rollout if the rollout ended
+        # HINT: rollout can end due to done, or due to max_path_length
+        rollout_done = (1 if (steps>=max_path_length or done) else 0) # HINT: this is either 0 or 1
+        terminals_s.append(rollout_done)
 
-    if rollout_done:
-        break
+        if rollout_done:
+            break
 
-t_b = rewards_s[-1]
-t_a = teacher_step_count
-env_student.close()
+    env_student.close()
 rewards_s = [-1*gamma*float(r) for r in rewards_s]
 teacher_r = [0]*len(rewards_t)
 teacher_r[-1] = gamma * max([0, t_b-t_a])
