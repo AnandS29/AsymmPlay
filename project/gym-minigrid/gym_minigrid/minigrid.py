@@ -49,6 +49,13 @@ OBJECT_TO_IDX = {
 
 IDX_TO_OBJECT = dict(zip(OBJECT_TO_IDX.values(), OBJECT_TO_IDX.keys()))
 
+# Map of state names to integers
+STATE_TO_IDX = {
+    'open'  : 0,
+    'closed': 1,
+    'locked': 2,
+}
+
 # Map of agent direction indices to vectors
 DIR_TO_VEC = [
     # Pointing right (positive X)
@@ -407,17 +414,17 @@ class Grid:
         assert j >= 0 and j < self.height
         return self.grid[j * self.width + i]
 
-    def horz_wall(self, x, y, length=None):
+    def horz_wall(self, x, y, length=None, obj_type=Wall):
         if length is None:
             length = self.width - x
         for i in range(0, length):
-            self.set(x + i, y, Wall())
+            self.set(x + i, y, obj_type())
 
-    def vert_wall(self, x, y, length=None):
+    def vert_wall(self, x, y, length=None, obj_type=Wall):
         if length is None:
             length = self.height - y
         for j in range(0, length):
-            self.set(x, y + j, Wall())
+            self.set(x, y + j, obj_type())
 
     def wall_rect(self, x, y, w, h):
         self.horz_wall(x, y, w)
@@ -690,9 +697,9 @@ class MiniGridEnv(gym.Env):
             shape=(self.agent_view_size, self.agent_view_size, 3),
             dtype='uint8'
         )
-        self.observation_space = spaces.Dict({
-            'image': self.observation_space
-        })
+        # self.observation_space = spaces.Dict({
+        #     'image': self.observation_space
+        # })
 
         # Range of possible rewards
         self.reward_range = (0, 1)
@@ -745,7 +752,6 @@ class MiniGridEnv(gym.Env):
 
         # Return first observation
         obs = self.gen_obs()
-
         return obs
 
     def seed(self, seed=1337):
@@ -951,6 +957,15 @@ class MiniGridEnv(gym.Env):
             obj.cur_pos = pos
 
         return pos
+
+    def put_obj(self, obj, i, j):
+        """
+        Put an object at a specific position in the grid
+        """
+
+        self.grid.set(i, j, obj)
+        obj.init_pos = (i, j)
+        obj.cur_pos = (i, j)
 
     def place_agent(
         self,
@@ -1206,13 +1221,13 @@ class MiniGridEnv(gym.Env):
         # - an image (partially observable view of the environment)
         # - the agent's direction/orientation (acting as a compass)
         # - a textual mission string (instructions for the agent)
-        # obs = {
-        #     'image': image,
-        #     'direction': self.agent_dir,
-        #     'mission': self.mission
-        # }
-        obs = np.ndarray.flatten(image)
-        return obs
+        obs = {
+            'image': image,
+            'direction': self.agent_dir,
+            'mission': self.mission
+        }
+
+        return image
 
     def get_obs_render(self, obs, tile_size=CELL_PIXELS//2, mode='pixmap'):
         """

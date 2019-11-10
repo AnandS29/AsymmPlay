@@ -23,3 +23,5 @@ Possible next steps:
   Visualization of movement in evaluation step
   Historical policy averaging
   Compare selfplay with just random walks of a teacher - it performs better from my tests (though need to formalize a bit more)
+
+#0.71,0.94

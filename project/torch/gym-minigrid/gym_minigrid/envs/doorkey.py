@@ -67,6 +67,7 @@ class TeacherDoorKeyEnv(DoorKeyEnv):
         self.min_steps = 0
 
     def step(self, action):
+
         self.step_count += 1
 
         reward = 0
@@ -131,11 +132,9 @@ class TeacherDoorKeyEnv(DoorKeyEnv):
             done = True
 
         obs = self.gen_obs()
-        if not self.is_teaching and self.step_count==1 and False:
-            print("end: ", self.end_pos)
         if done and self.is_teaching:
             student_return_avg = []
-            for _ in range(10):
+            for _ in range(1):
                 envs = []
                 for i in range(self.args.procs):
                     env = gym.make(self.args.env)
@@ -208,6 +207,14 @@ class TeacherDoorKeyEnv5x5(TeacherDoorKeyEnv):
 register(
     id='MiniGrid-TeacherDoorKey-5x5-v0',
     entry_point='gym_minigrid.envs:TeacherDoorKeyEnv5x5'
+)
+
+class TeacherDoorKeyEnv10x10(TeacherDoorKeyEnv):
+    def __init__(self):
+        super().__init__(size=10)
+register(
+    id='MiniGrid-TeacherDoorKey-10x10-v0',
+    entry_point='gym_minigrid.envs:TeacherDoorKeyEnv10x10'
 )
 
 class DoorKeyEnv6x6(DoorKeyEnv):

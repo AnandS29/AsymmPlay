@@ -51,13 +51,13 @@ class RL_Trainer(object):
 
         eval_seed = 10
 
-        self.env_teacher, self.env_student = gym.make("MiniGrid-TeacherEnv-5x5-v0"), gym.make("MiniGrid-StudentEnv-5x5-v0")
+        self.env_teacher, self.env_student = gym.make("MiniGrid-TeacherDoorKeyEnv-5x5-v0"), gym.make("MiniGrid-TeacherDoorKeyEnv-5x5-v0")
 
-        self.eval_env = gym.make("MiniGrid-StudentEnv-5x5-v0")
+        self.eval_env = gym.make("MiniGrid-TeacherDoorKeyEnv-5x5-v0")
         # env_student = gym.make("MiniGrid-StudentEnv-5x5-v0")
-        self.eval_env.goal_pos = [5,5]
+        self.eval_env.end_pos = [3,1]
+        self.eval_env.is_teaching = False
         # # env_student.teacher_step_count = teacher_step_count
-        self.eval_env.setup()
         self.eval_env.seed(eval_seed)
 
         # Maximum length for episodes

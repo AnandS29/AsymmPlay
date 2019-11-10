@@ -39,15 +39,14 @@ def sample_trajectory(env_teacher, env_student, policy_teacher, policy_student, 
         terminals_t.append(rollout_done)
 
         if rollout_done:
-            start, end, teacher_step_count = info["start"], info["end"], info["teacher_step_count"]
+            end = info["agent_pos"]
+            teacher_step = steps
             break
 
-    env_student.goal_pos = end
-    env_student.teacher_step_count = teacher_step_count
-    env_student.setup()
+    env_student.end_pos = end
+    env_student.teacher_step = teacher_step
     env_student.seed(seed)
     ob = env_student.reset() # HINT: should be the output of resetting the env
-    env_student.seed(seed)
     # init vars
     steps = 0
     while True:
@@ -57,28 +56,21 @@ def sample_trajectory(env_teacher, env_student, policy_teacher, policy_student, 
         ac = ac[0]
         acs_s.append(ac)
 
-        # take that action and record results
         ob, rew, done, info = env_student.step(ac)
 
-        # record result of taking that action
         steps += 1
         next_obs_s.append(ob)
         rewards_s.append(rew)
 
-        # TODO end the rollout if the rollout ended
-        # HINT: rollout can end due to done, or due to max_path_length
         rollout_done = (1 if (steps>=max_path_length or done) else 0) # HINT: this is either 0 or 1
         terminals_s.append(rollout_done)
 
         if rollout_done:
             break
 
-    t_b = rewards_s[-1]
-    t_a = teacher_step_count
-
-    rewards_s = [-1*gamma*float(r) for r in rewards_s]
     teacher_r = [0]*len(rewards_t)
-    teacher_r[-1] = gamma * max([0, t_b-t_a])
+    teacher_r[-1] = max([0, rewards_s[-1] - rewards_t[-1]])
+
     return Path(obs_t, image_obs_t, acs_t, teacher_r, next_obs_t, terminals_t), Path(obs_s, image_obs_s, acs_s, rewards_s, next_obs_s, terminals_s)
 
 def sample_trajectories(env_teacher, env_student, policy_teacher, policy_student, min_timesteps_per_batch, max_path_length, render=False, render_mode=('rgb_array')):

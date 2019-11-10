@@ -8,7 +8,9 @@ import sys
 from torch_ac.utils import ParallelEnv
 import utils
 from model import ACModel
-
+import matplotlib.pyplot as plt
+import numpy as np
+from collections import Counter
 
 # Parse arguments
 
@@ -27,8 +29,8 @@ parser.add_argument("--seed", type=int, default=1,
                     help="random seed (default: 1)")
 parser.add_argument("--log-interval", type=int, default=1,
                     help="number of updates between two logs (default: 1)")
-parser.add_argument("--save-interval", type=int, default=10,
-                    help="number of updates between two saves (default: 10, 0 means no saving)")
+parser.add_argument("--save-interval", type=int, default=1,
+                    help="number of updates between two saves (default: 1, 0 means no saving)")
 parser.add_argument("--procs", type=int, default=16,
                     help="number of processes (default: 16)")
 parser.add_argument("--frames", type=int, default=10**7,
@@ -69,7 +71,7 @@ parser.add_argument("--argmax", action="store_true", default=False,
                     help="action with highest probability is selected")
 parser.add_argument("--worst-episodes-to-show", type=int, default=10,
                     help="how many worst episodes to show")
-parser.add_argument("--episodes", type=int, default=100, help="number of episodes of evaluation (default: 100)")
+parser.add_argument("--episodes", type=int, default=10, help="number of episodes of evaluation (default: 10)")
 
 args = parser.parse_args()
 
@@ -105,6 +107,7 @@ txt_logger.info(f"Device: {device}\n")
 
 # Load environments
 envs = []
+s = 10
 for i in range(args.procs):
     env = utils.make_env(args.env, args.seed)
     env.is_teaching = False
@@ -189,7 +192,7 @@ if args.teach:
                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                             args.optim_alpha, args.optim_eps, preprocess_obss)
     print("Starting to teach")
-    while j < 2:
+    while j < 10:
         # observation = teacher_env.reset()
         # for t in range(100):
         #     action = teacher_env.action_space.sample()
@@ -208,12 +211,12 @@ envs = []
 for i in range(args.procs):
     env = utils.make_env(args.env, args.seed)
     env.is_teaching = False
-    env.end_pos = [3,3]
+    env.end_pos = [3,1]
     envs.append(env)
 algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                             args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
-while num_frames < args.frames or (update <= 80 and not args.teach):
+while (num_frames < args.frames or (update <= 80 and not args.teach)) and (update<=2):
     # Update model parameters
 
     update_start_time = time.time()
@@ -257,7 +260,7 @@ while num_frames < args.frames or (update <= 80 and not args.teach):
 
     # Save status
 
-    if args.save_interval > 0 and update % args.save_interval == 0:
+    if (args.save_interval > 0 and update % args.save_interval == 0) or True:
         status = {"num_frames": num_frames, "update": update,
                   "model_state": acmodel.state_dict(), "optimizer_state": algo.optimizer.state_dict()}
         if hasattr(preprocess_obss, "vocab"):
@@ -305,10 +308,11 @@ obss = env.reset()
 log_done_counter = 0
 log_episode_return = torch.zeros(args.procs, device=device)
 log_episode_num_frames = torch.zeros(args.procs, device=device)
-
+positions = []
 while log_done_counter < args.episodes:
     actions = agent.get_actions(obss)
-    obss, rewards, dones, _ = env.step(actions)
+    obss, rewards, dones, infos = env.step(actions)
+    positions.extend([info["agent_pos"] for info in infos])
     agent.analyze_feedbacks(rewards, dones)
 
     log_episode_return += torch.tensor(rewards, device=device, dtype=torch.float)
@@ -348,3 +352,14 @@ if n > 0:
     indexes = sorted(range(len(logs["return_per_episode"])), key=lambda k: logs["return_per_episode"][k])
     for i in indexes[:n]:
         print("- episode {}: R={}, F={}".format(i, logs["return_per_episode"][i], logs["num_frames_per_episode"][i]))
+
+# Heatmap
+grid = np.zeros((s,s))
+positions = [(i,j) for i,j in positions]
+counts = Counter(positions)
+for i in range(s):
+    for j in range(s):
+        c = counts[(i,j)]
+        grid[i][j] = c/len(positions)
+plt.imshow(grid, cmap='hot', interpolation='nearest')
+plt.savefig('storage/'+args.model+'/heat_'+str(time.time())+'.png')

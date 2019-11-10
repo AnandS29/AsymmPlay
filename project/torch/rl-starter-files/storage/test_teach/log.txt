@@ -1,0 +1,311 @@
+/Users/anandsranjan/Desktop/AsymmPlay/project/torch/rl-starter-files/scripts/train.py --algo ppo --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 16 --model test_teach --teach
+
+Namespace(algo='ppo', argmax=False, batch_size=256, clip_eps=0.2, discount=0.99, entropy_coef=0.01, env='MiniGrid-TeacherDoorKey-5x5-v0', episodes=100, epochs=4, frames=80000, frames_per_proc=None, gae_lambda=0.95, log_interval=1, lr=0.001, max_grad_norm=0.5, mem=False, model='test_teach', optim_alpha=0.99, optim_eps=1e-08, procs=16, recurrence=1, save_interval=10, seed=1, teach=True, text=False, value_loss_coef=0.5, worst_episodes_to_show=10)
+
+Device: cpu
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 16, kernel_size=(2, 2), stride=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
+    (3): Conv2d(16, 32, kernel_size=(2, 2), stride=(1, 1))
+    (4): ReLU()
+    (5): Conv2d(32, 64, kernel_size=(2, 2), stride=(1, 1))
+    (6): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 1 | F 002048 | FPS 3318 | D 15 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 0.0 0.0 0 0 | H 1.633 | V 0.320 | pL 0.055 | vL 0.001 | ∇ 0.051
+U 2 | F 004096 | FPS 3226 | D 16 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 250.0 0.0 250.0 250.0 | H 1.741 | V 0.227 | pL 0.085 | vL 0.004 | ∇ 0.062
+U 3 | F 006144 | FPS 3219 | D 16 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 250.0 0.0 250.0 250.0 | H 1.821 | V 0.199 | pL 0.036 | vL 0.000 | ∇ 0.019
+U 4 | F 008192 | FPS 3261 | D 17 | rR:μσmM 0.04 0.10 0.00 0.32 | F:μσmM 243.3 17.4 190.0 250.0 | H 1.870 | V 0.149 | pL 0.047 | vL 0.002 | ∇ 0.022
+U 5 | F 010240 | FPS 3311 | D 18 | rR:μσmM 0.09 0.23 0.00 0.77 | F:μσmM 229.0 55.4 65.0 250.0 | H 1.910 | V 0.129 | pL 0.015 | vL 0.002 | ∇ 0.013
+U 6 | F 012288 | FPS 3244 | D 18 | rR:μσmM 0.09 0.23 0.00 0.77 | F:μσmM 229.2 55.5 65.0 250.0 | H 1.928 | V 0.098 | pL 0.033 | vL 0.001 | ∇ 0.013
+U 7 | F 014336 | FPS 3277 | D 19 | rR:μσmM 0.04 0.12 0.00 0.50 | F:μσmM 243.1 26.6 140.0 250.0 | H 1.938 | V 0.088 | pL 0.011 | vL 0.001 | ∇ 0.006
+U 8 | F 016384 | FPS 3303 | D 20 | rR:μσmM 0.05 0.13 0.00 0.50 | F:μσmM 240.6 27.7 140.0 250.0 | H 1.936 | V 0.067 | pL 0.019 | vL 0.000 | ∇ 0.007
+U 9 | F 018432 | FPS 3302 | D 20 | rR:μσmM 0.07 0.17 0.00 0.58 | F:μσmM 235.4 39.2 116.0 250.0 | H 1.938 | V 0.066 | pL 0.004 | vL 0.001 | ∇ 0.013
+U 10 | F 020480 | FPS 3251 | D 21 | rR:μσmM 0.14 0.25 0.00 0.81 | F:μσmM 218.8 58.1 54.0 250.0 | H 1.932 | V 0.055 | pL 0.001 | vL 0.003 | ∇ 0.016
+Status saved
+U 11 | F 022528 | FPS 3220 | D 21 | rR:μσmM 0.13 0.25 0.00 0.81 | F:μσmM 221.1 58.7 54.0 250.0 | H 1.936 | V 0.053 | pL 0.005 | vL 0.001 | ∇ 0.008
+U 12 | F 024576 | FPS 3231 | D 22 | rR:μσmM 0.06 0.14 0.00 0.47 | F:μσmM 237.4 29.5 147.0 250.0 | H 1.927 | V 0.050 | pL 0.011 | vL 0.001 | ∇ 0.010
+U 13 | F 026624 | FPS 3247 | D 23 | rR:μσmM 0.05 0.20 0.00 0.82 | F:μσmM 237.5 48.4 50.0 250.0 | H 1.927 | V 0.056 | pL 0.002 | vL 0.002 | ∇ 0.015
+U 14 | F 028672 | FPS 3268 | D 23 | rR:μσmM 0.11 0.22 0.00 0.82 | F:μσmM 226.0 51.9 50.0 250.0 | H 1.934 | V 0.040 | pL 0.005 | vL 0.000 | ∇ 0.007
+U 15 | F 030720 | FPS 3163 | D 24 | rR:μσmM 0.24 0.32 0.00 0.81 | F:μσmM 195.2 77.8 53.0 250.0 | H 1.913 | V 0.061 | pL -0.020 | vL 0.006 | ∇ 0.036
+U 16 | F 032768 | FPS 3216 | D 25 | rR:μσmM 0.24 0.34 0.00 0.86 | F:μσmM 194.1 82.3 38.0 250.0 | H 1.916 | V 0.068 | pL -0.006 | vL 0.005 | ∇ 0.037
+U 17 | F 034816 | FPS 3238 | D 25 | rR:μσmM 0.20 0.29 0.00 0.84 | F:μσmM 204.2 68.9 44.0 250.0 | H 1.915 | V 0.073 | pL 0.003 | vL 0.002 | ∇ 0.018
+U 18 | F 036864 | FPS 3220 | D 26 | rR:μσmM 0.19 0.23 0.00 0.59 | F:μσmM 208.2 51.5 113.0 250.0 | H 1.901 | V 0.078 | pL -0.007 | vL 0.003 | ∇ 0.023
+U 19 | F 038912 | FPS 3197 | D 27 | rR:μσmM 0.47 0.29 0.00 0.91 | F:μσmM 142.0 73.8 26.0 250.0 | H 1.876 | V 0.121 | pL -0.033 | vL 0.008 | ∇ 0.048
+U 20 | F 040960 | FPS 3218 | D 27 | rR:μσmM 0.60 0.27 0.00 0.96 | F:μσmM 108.8 71.2 12.0 250.0 | H 1.839 | V 0.184 | pL -0.058 | vL 0.016 | ∇ 0.070
+Status saved
+U 21 | F 043008 | FPS 3170 | D 28 | rR:μσmM 0.68 0.25 0.00 0.97 | F:μσmM 87.0 66.7 7.0 250.0 | H 1.805 | V 0.260 | pL -0.066 | vL 0.016 | ∇ 0.080
+U 22 | F 045056 | FPS 3185 | D 28 | rR:μσmM 0.78 0.16 0.31 0.96 | F:μσmM 60.1 45.0 11.0 193.0 | H 1.769 | V 0.358 | pL -0.109 | vL 0.019 | ∇ 0.092
+U 23 | F 047104 | FPS 3088 | D 29 | rR:μσmM 0.82 0.15 0.27 0.96 | F:μσmM 51.3 42.8 12.0 202.0 | H 1.704 | V 0.468 | pL -0.072 | vL 0.017 | ∇ 0.097
+U 24 | F 049152 | FPS 3182 | D 30 | rR:μσmM 0.81 0.19 0.00 0.96 | F:μσmM 51.2 49.2 11.0 250.0 | H 1.690 | V 0.526 | pL -0.067 | vL 0.015 | ∇ 0.097
+U 25 | F 051200 | FPS 3101 | D 30 | rR:μσmM 0.87 0.09 0.47 0.97 | F:μσmM 36.8 25.8 9.0 146.0 | H 1.598 | V 0.623 | pL -0.076 | vL 0.010 | ∇ 0.109
+U 26 | F 053248 | FPS 3113 | D 31 | rR:μσmM 0.91 0.04 0.77 0.97 | F:μσmM 24.5 11.6 9.0 63.0 | H 1.463 | V 0.721 | pL -0.106 | vL 0.007 | ∇ 0.101
+U 27 | F 055296 | FPS 3060 | D 32 | rR:μσmM 0.93 0.04 0.79 0.98 | F:μσmM 19.4 10.0 6.0 59.0 | H 1.321 | V 0.810 | pL -0.057 | vL 0.004 | ∇ 0.087
+U 28 | F 057344 | FPS 3017 | D 32 | rR:μσmM 0.94 0.03 0.85 0.98 | F:μσmM 17.3 7.5 6.0 41.0 | H 1.300 | V 0.827 | pL -0.030 | vL 0.003 | ∇ 0.060
+U 29 | F 059392 | FPS 3021 | D 33 | rR:μσmM 0.94 0.03 0.79 0.97 | F:μσmM 17.1 7.2 8.0 57.0 | H 1.203 | V 0.853 | pL -0.020 | vL 0.002 | ∇ 0.040
+U 30 | F 061440 | FPS 3036 | D 34 | rR:μσmM 0.95 0.02 0.77 0.97 | F:μσmM 14.7 6.3 7.0 64.0 | H 1.146 | V 0.870 | pL -0.013 | vL 0.001 | ∇ 0.034
+Status saved
+U 31 | F 063488 | FPS 3019 | D 35 | rR:μσmM 0.95 0.02 0.88 0.97 | F:μσmM 15.2 4.9 7.0 33.0 | H 1.282 | V 0.870 | pL -0.003 | vL 0.001 | ∇ 0.030
+U 32 | F 065536 | FPS 3056 | D 35 | rR:μσmM 0.94 0.02 0.81 0.97 | F:μσmM 17.2 6.4 8.0 54.0 | H 1.308 | V 0.859 | pL 0.010 | vL 0.001 | ∇ 0.032
+U 33 | F 067584 | FPS 3040 | D 36 | rR:μσmM 0.94 0.02 0.88 0.97 | F:μσmM 17.4 6.0 8.0 34.0 | H 1.372 | V 0.849 | pL 0.003 | vL 0.001 | ∇ 0.032
+U 34 | F 069632 | FPS 3013 | D 37 | rR:μσmM 0.94 0.02 0.87 0.97 | F:μσmM 16.1 5.6 7.0 36.0 | H 1.428 | V 0.866 | pL 0.003 | vL 0.001 | ∇ 0.029
+U 35 | F 071680 | FPS 3075 | D 37 | rR:μσmM 0.93 0.03 0.74 0.97 | F:μσmM 19.2 9.5 7.0 71.0 | H 1.412 | V 0.835 | pL 0.024 | vL 0.002 | ∇ 0.052
+U 36 | F 073728 | FPS 3012 | D 38 | rR:μσmM 0.93 0.03 0.81 0.97 | F:μσmM 18.3 8.4 8.0 54.0 | H 1.341 | V 0.831 | pL -0.010 | vL 0.002 | ∇ 0.041
+U 37 | F 075776 | FPS 3016 | D 39 | rR:μσmM 0.94 0.02 0.85 0.98 | F:μσmM 17.2 6.6 6.0 41.0 | H 1.318 | V 0.853 | pL -0.005 | vL 0.001 | ∇ 0.038
+U 38 | F 077824 | FPS 3001 | D 39 | rR:μσmM 0.95 0.02 0.78 0.98 | F:μσmM 14.7 6.8 5.0 62.0 | H 1.308 | V 0.867 | pL -0.009 | vL 0.001 | ∇ 0.039
+U 39 | F 079872 | FPS 2989 | D 40 | rR:μσmM 0.95 0.02 0.85 0.98 | F:μσmM 15.3 5.7 5.0 41.0 | H 1.331 | V 0.864 | pL -0.006 | vL 0.001 | ∇ 0.031
+U 40 | F 081920 | FPS 2953 | D 41 | rR:μσmM 0.94 0.02 0.85 0.97 | F:μσmM 15.4 6.2 7.0 41.0 | H 1.259 | V 0.865 | pL -0.006 | vL 0.001 | ∇ 0.032
+Status saved
+/Users/anandsranjan/Desktop/AsymmPlay/project/torch/rl-starter-files/scripts/train.py --algo ppo --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 16 --model test_teach
+
+Namespace(algo='ppo', argmax=False, batch_size=256, clip_eps=0.2, discount=0.99, entropy_coef=0.01, env='MiniGrid-TeacherDoorKey-5x5-v0', episodes=100, epochs=4, frames=80000, frames_per_proc=None, gae_lambda=0.95, log_interval=1, lr=0.001, max_grad_norm=0.5, mem=False, model='test_teach', optim_alpha=0.99, optim_eps=1e-08, procs=16, recurrence=1, save_interval=10, seed=1, teach=False, text=False, value_loss_coef=0.5, worst_episodes_to_show=10)
+
+Device: cpu
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 16, kernel_size=(2, 2), stride=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
+    (3): Conv2d(16, 32, kernel_size=(2, 2), stride=(1, 1))
+    (4): ReLU()
+    (5): Conv2d(32, 64, kernel_size=(2, 2), stride=(1, 1))
+    (6): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 41 | F 083968 | FPS 3305 | D 0 | rR:μσmM 0.94 0.02 0.86 0.97 | F:μσmM 15.7 5.4 8.0 40.0 | H 1.291 | V 0.866 | pL -0.005 | vL 0.001 | ∇ 0.038
+U 42 | F 086016 | FPS 3213 | D 1 | rR:μσmM 0.95 0.02 0.89 0.97 | F:μσmM 14.3 4.7 7.0 30.0 | H 1.242 | V 0.870 | pL -0.015 | vL 0.001 | ∇ 0.023
+U 43 | F 088064 | FPS 3156 | D 1 | rR:μσmM 0.95 0.02 0.88 0.98 | F:μσmM 14.0 5.0 6.0 34.0 | H 1.309 | V 0.884 | pL -0.005 | vL 0.001 | ∇ 0.034
+U 44 | F 090112 | FPS 3182 | D 2 | rR:μσmM 0.94 0.02 0.86 0.98 | F:μσmM 15.3 5.5 6.0 39.0 | H 1.359 | V 0.875 | pL 0.014 | vL 0.001 | ∇ 0.041
+U 45 | F 092160 | FPS 3235 | D 3 | rR:μσmM 0.94 0.02 0.87 0.98 | F:μσmM 15.9 5.2 6.0 35.0 | H 1.429 | V 0.867 | pL 0.003 | vL 0.001 | ∇ 0.037
+U 46 | F 094208 | FPS 3264 | D 3 | rR:μσmM 0.94 0.02 0.86 0.97 | F:μσmM 17.1 5.6 7.0 38.0 | H 1.407 | V 0.848 | pL 0.009 | vL 0.002 | ∇ 0.038
+U 47 | F 096256 | FPS 3229 | D 4 | rR:μσmM 0.93 0.06 0.36 0.97 | F:μσmM 19.1 15.9 7.0 179.0 | H 1.431 | V 0.843 | pL 0.006 | vL 0.003 | ∇ 0.056
+U 48 | F 098304 | FPS 3295 | D 5 | rR:μσmM 0.94 0.02 0.84 0.97 | F:μσmM 17.7 6.8 8.0 45.0 | H 1.402 | V 0.835 | pL 0.001 | vL 0.002 | ∇ 0.047
+U 49 | F 100352 | FPS 3251 | D 5 | rR:μσmM 0.93 0.04 0.70 0.97 | F:μσmM 19.5 10.0 8.0 84.0 | H 1.398 | V 0.815 | pL 0.002 | vL 0.003 | ∇ 0.046
+U 50 | F 102400 | FPS 3263 | D 6 | rR:μσmM 0.93 0.09 0.00 0.97 | F:μσmM 20.0 23.0 8.0 250.0 | H 1.381 | V 0.825 | pL -0.010 | vL 0.005 | ∇ 0.085
+Status saved
+U 51 | F 104448 | FPS 3231 | D 7 | rR:μσmM 0.94 0.02 0.85 0.97 | F:μσmM 17.5 6.3 8.0 41.0 | H 1.294 | V 0.838 | pL -0.025 | vL 0.002 | ∇ 0.042
+U 52 | F 106496 | FPS 3208 | D 7 | rR:μσmM 0.94 0.02 0.84 0.97 | F:μσmM 15.6 5.6 8.0 44.0 | H 1.320 | V 0.865 | pL -0.018 | vL 0.001 | ∇ 0.030
+U 53 | F 108544 | FPS 3241 | D 8 | rR:μσmM 0.94 0.02 0.84 0.97 | F:μσmM 16.7 6.1 8.0 45.0 | H 1.336 | V 0.855 | pL 0.000 | vL 0.001 | ∇ 0.031
+U 54 | F 110592 | FPS 3241 | D 8 | rR:μσmM 0.94 0.02 0.86 0.97 | F:μσmM 16.3 5.7 8.0 38.0 | H 1.313 | V 0.860 | pL -0.005 | vL 0.001 | ∇ 0.030
+U 55 | F 112640 | FPS 3122 | D 9 | rR:μσmM 0.95 0.02 0.86 0.98 | F:μσmM 14.7 5.1 6.0 38.0 | H 1.260 | V 0.873 | pL -0.008 | vL 0.001 | ∇ 0.028
+U 56 | F 114688 | FPS 3064 | D 10 | rR:μσmM 0.95 0.03 0.65 0.98 | F:μσmM 13.9 8.3 5.0 96.0 | H 1.370 | V 0.872 | pL -0.000 | vL 0.001 | ∇ 0.040
+U 57 | F 116736 | FPS 3083 | D 10 | rR:μσmM 0.94 0.02 0.86 0.98 | F:μσmM 16.7 6.4 6.0 40.0 | H 1.442 | V 0.862 | pL 0.014 | vL 0.001 | ∇ 0.042
+U 58 | F 118784 | FPS 3156 | D 11 | rR:μσmM 0.93 0.03 0.70 0.97 | F:μσmM 18.5 8.1 8.0 82.0 | H 1.468 | V 0.848 | pL 0.012 | vL 0.001 | ∇ 0.044
+U 59 | F 120832 | FPS 3079 | D 12 | rR:μσmM 0.93 0.03 0.82 0.97 | F:μσmM 19.6 7.1 8.0 51.0 | H 1.466 | V 0.835 | pL 0.004 | vL 0.002 | ∇ 0.036
+U 60 | F 122880 | FPS 3096 | D 12 | rR:μσmM 0.93 0.05 0.55 0.97 | F:μσmM 18.8 12.6 7.0 125.0 | H 1.445 | V 0.827 | pL 0.007 | vL 0.003 | ∇ 0.056
+Status saved
+U 61 | F 124928 | FPS 3038 | D 13 | rR:μσmM 0.93 0.03 0.71 0.97 | F:μσmM 18.1 8.9 7.0 81.0 | H 1.354 | V 0.844 | pL -0.002 | vL 0.002 | ∇ 0.032
+U 62 | F 126976 | FPS 3094 | D 14 | rR:μσmM 0.94 0.03 0.82 0.98 | F:μσmM 16.9 7.0 6.0 51.0 | H 1.318 | V 0.850 | pL -0.008 | vL 0.002 | ∇ 0.031
+U 63 | F 129024 | FPS 3088 | D 14 | rR:μσmM 0.95 0.02 0.87 0.98 | F:μσmM 15.2 5.4 6.0 37.0 | H 1.295 | V 0.870 | pL -0.011 | vL 0.001 | ∇ 0.027
+U 64 | F 131072 | FPS 3052 | D 15 | rR:μσmM 0.95 0.02 0.85 0.97 | F:μσmM 14.7 6.0 7.0 43.0 | H 1.349 | V 0.872 | pL 0.001 | vL 0.001 | ∇ 0.034
+U 65 | F 133120 | FPS 3069 | D 16 | rR:μσmM 0.95 0.02 0.89 0.98 | F:μσmM 14.5 4.7 5.0 31.0 | H 1.407 | V 0.872 | pL -0.002 | vL 0.001 | ∇ 0.023
+U 66 | F 135168 | FPS 3065 | D 16 | rR:μσmM 0.94 0.02 0.87 0.98 | F:μσmM 16.8 6.5 5.0 37.0 | H 1.403 | V 0.862 | pL 0.014 | vL 0.001 | ∇ 0.032
+U 67 | F 137216 | FPS 3060 | D 17 | rR:μσmM 0.94 0.02 0.87 0.97 | F:μσmM 17.1 5.7 8.0 35.0 | H 1.403 | V 0.858 | pL 0.002 | vL 0.001 | ∇ 0.025
+U 68 | F 139264 | FPS 3057 | D 18 | rR:μσmM 0.94 0.02 0.86 0.98 | F:μσmM 15.3 5.3 6.0 39.0 | H 1.352 | V 0.863 | pL -0.011 | vL 0.001 | ∇ 0.022
+U 69 | F 141312 | FPS 3108 | D 18 | rR:μσmM 0.94 0.02 0.87 0.97 | F:μσmM 16.2 6.0 7.0 36.0 | H 1.390 | V 0.861 | pL 0.003 | vL 0.001 | ∇ 0.031
+U 70 | F 143360 | FPS 3063 | D 19 | rR:μσmM 0.94 0.02 0.87 0.97 | F:μσmM 16.1 5.3 8.0 35.0 | H 1.403 | V 0.863 | pL -0.001 | vL 0.001 | ∇ 0.029
+Status saved
+U 71 | F 145408 | FPS 3068 | D 20 | rR:μσmM 0.94 0.02 0.81 0.98 | F:μσmM 16.7 6.2 6.0 53.0 | H 1.383 | V 0.857 | pL 0.009 | vL 0.002 | ∇ 0.041
+U 72 | F 147456 | FPS 3098 | D 20 | rR:μσmM 0.93 0.03 0.81 0.97 | F:μσmM 18.2 7.0 8.0 53.0 | H 1.387 | V 0.847 | pL 0.001 | vL 0.001 | ∇ 0.033
+U 73 | F 149504 | FPS 3062 | D 21 | rR:μσmM 0.94 0.02 0.86 0.97 | F:μσmM 15.4 5.9 7.0 39.0 | H 1.298 | V 0.861 | pL -0.013 | vL 0.001 | ∇ 0.031
+U 74 | F 151552 | FPS 3051 | D 22 | rR:μσmM 0.94 0.02 0.85 0.98 | F:μσmM 15.7 6.0 6.0 41.0 | H 1.350 | V 0.871 | pL 0.002 | vL 0.001 | ∇ 0.028
+U 75 | F 153600 | FPS 3051 | D 22 | rR:μσmM 0.94 0.02 0.87 0.98 | F:μσmM 15.7 5.9 6.0 37.0 | H 1.300 | V 0.866 | pL 0.007 | vL 0.001 | ∇ 0.030
+U 76 | F 155648 | FPS 3088 | D 23 | rR:μσmM 0.94 0.02 0.89 0.98 | F:μσmM 15.4 5.2 6.0 31.0 | H 1.370 | V 0.869 | pL -0.005 | vL 0.001 | ∇ 0.024
+U 77 | F 157696 | FPS 3026 | D 24 | rR:μσmM 0.94 0.02 0.84 0.97 | F:μσmM 16.3 6.1 7.0 44.0 | H 1.411 | V 0.863 | pL 0.008 | vL 0.001 | ∇ 0.029
+U 78 | F 159744 | FPS 3013 | D 24 | rR:μσmM 0.94 0.03 0.85 0.98 | F:μσmM 17.0 7.0 6.0 42.0 | H 1.360 | V 0.855 | pL 0.002 | vL 0.001 | ∇ 0.032
+U 79 | F 161792 | FPS 3057 | D 25 | rR:μσmM 0.94 0.02 0.89 0.97 | F:μσmM 15.3 5.2 7.0 30.0 | H 1.306 | V 0.866 | pL -0.008 | vL 0.001 | ∇ 0.026
+U 80 | F 163840 | FPS 3065 | D 26 | rR:μσmM 0.95 0.02 0.87 0.97 | F:μσmM 15.2 5.7 7.0 36.0 | H 1.307 | V 0.866 | pL -0.003 | vL 0.001 | ∇ 0.033
+Status saved
+U 81 | F 165888 | FPS 2999 | D 27 | rR:μσmM 0.95 0.02 0.87 0.98 | F:μσmM 15.1 5.1 6.0 36.0 | H 1.261 | V 0.868 | pL -0.010 | vL 0.001 | ∇ 0.027
+/Users/anandsranjan/Desktop/AsymmPlay/project/torch/rl-starter-files/scripts/train.py --algo ppo --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 16 --model test_teach --teach
+
+Namespace(algo='ppo', argmax=False, batch_size=256, clip_eps=0.2, discount=0.99, entropy_coef=0.01, env='MiniGrid-TeacherDoorKey-5x5-v0', episodes=100, epochs=4, frames=80000, frames_per_proc=None, gae_lambda=0.95, log_interval=1, lr=0.001, max_grad_norm=0.5, mem=False, model='test_teach', optim_alpha=0.99, optim_eps=1e-08, procs=16, recurrence=1, save_interval=10, seed=1, teach=True, text=False, value_loss_coef=0.5, worst_episodes_to_show=10)
+
+Device: cpu
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 16, kernel_size=(2, 2), stride=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
+    (3): Conv2d(16, 32, kernel_size=(2, 2), stride=(1, 1))
+    (4): ReLU()
+    (5): Conv2d(32, 64, kernel_size=(2, 2), stride=(1, 1))
+    (6): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+/Users/anandsranjan/Desktop/AsymmPlay/project/torch/rl-starter-files/scripts/train.py --algo ppo --env MiniGrid-TeacherDoorKey-10x10-v0 --save-interval 10 --frames 80000 --procs 16 --model test_teach --teach
+
+Namespace(algo='ppo', argmax=False, batch_size=256, clip_eps=0.2, discount=0.99, entropy_coef=0.01, env='MiniGrid-TeacherDoorKey-10x10-v0', episodes=100, epochs=4, frames=80000, frames_per_proc=None, gae_lambda=0.95, log_interval=1, lr=0.001, max_grad_norm=0.5, mem=False, model='test_teach', optim_alpha=0.99, optim_eps=1e-08, procs=16, recurrence=1, save_interval=10, seed=1, teach=True, text=False, value_loss_coef=0.5, worst_episodes_to_show=10)
+
+Device: cpu
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 16, kernel_size=(2, 2), stride=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
+    (3): Conv2d(16, 32, kernel_size=(2, 2), stride=(1, 1))
+    (4): ReLU()
+    (5): Conv2d(32, 64, kernel_size=(2, 2), stride=(1, 1))
+    (6): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+/Users/anandsranjan/Desktop/AsymmPlay/project/torch/rl-starter-files/scripts/train.py --algo ppo --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 16 --model test_teach --teach
+
+Namespace(algo='ppo', argmax=False, batch_size=256, clip_eps=0.2, discount=0.99, entropy_coef=0.01, env='MiniGrid-TeacherDoorKey-5x5-v0', episodes=100, epochs=4, frames=80000, frames_per_proc=None, gae_lambda=0.95, log_interval=1, lr=0.001, max_grad_norm=0.5, mem=False, model='test_teach', optim_alpha=0.99, optim_eps=1e-08, procs=16, recurrence=1, save_interval=10, seed=1, teach=True, text=False, value_loss_coef=0.5, worst_episodes_to_show=10)
+
+Device: cpu
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 16, kernel_size=(2, 2), stride=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
+    (3): Conv2d(16, 32, kernel_size=(2, 2), stride=(1, 1))
+    (4): ReLU()
+    (5): Conv2d(32, 64, kernel_size=(2, 2), stride=(1, 1))
+    (6): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+/Users/anandsranjan/Desktop/AsymmPlay/project/torch/rl-starter-files/scripts/train.py --algo ppo --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 1 --model test_teach --teach
+
+Namespace(algo='ppo', argmax=False, batch_size=256, clip_eps=0.2, discount=0.99, entropy_coef=0.01, env='MiniGrid-TeacherDoorKey-5x5-v0', episodes=100, epochs=4, frames=80000, frames_per_proc=None, gae_lambda=0.95, log_interval=1, lr=0.001, max_grad_norm=0.5, mem=False, model='test_teach', optim_alpha=0.99, optim_eps=1e-08, procs=1, recurrence=1, save_interval=10, seed=1, teach=True, text=False, value_loss_coef=0.5, worst_episodes_to_show=10)
+
+Device: cpu
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 16, kernel_size=(2, 2), stride=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
+    (3): Conv2d(16, 32, kernel_size=(2, 2), stride=(1, 1))
+    (4): ReLU()
+    (5): Conv2d(32, 64, kernel_size=(2, 2), stride=(1, 1))
+    (6): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
