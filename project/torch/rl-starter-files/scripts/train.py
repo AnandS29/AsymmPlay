@@ -35,6 +35,8 @@ parser.add_argument("--procs", type=int, default=16,
                     help="number of processes (default: 16)")
 parser.add_argument("--frames", type=int, default=10**7,
                     help="number of frames of training (default: 1e7)")
+parser.add_argument("--t_iter", type=int, default=5,
+                    help="teaching iterations (default: 5)")
 
 ## Parameters for main algorithm
 parser.add_argument("--epochs", type=int, default=4,
@@ -192,7 +194,7 @@ if args.teach:
                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                             args.optim_alpha, args.optim_eps, preprocess_obss)
     print("Starting to teach")
-    while j < 10:
+    while j < args.t_iter:
         # observation = teacher_env.reset()
         # for t in range(100):
         #     action = teacher_env.action_space.sample()
@@ -216,7 +218,7 @@ for i in range(args.procs):
 algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                             args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
-while (num_frames < args.frames or (update <= 80 and not args.teach)) and (update<=2):
+while (num_frames < args.frames and False) or (update <= 5 and args.teach) or (update <= 15 and not args.teach):
     # Update model parameters
 
     update_start_time = time.time()
@@ -363,3 +365,4 @@ for i in range(s):
         grid[i][j] = c/len(positions)
 plt.imshow(grid, cmap='hot', interpolation='nearest')
 plt.savefig('storage/'+args.model+'/heat_'+str(time.time())+'.png')
+print(grid)
