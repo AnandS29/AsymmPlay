@@ -11,6 +11,7 @@ from model import ACModel
 import matplotlib.pyplot as plt
 import numpy as np
 from collections import Counter
+import copy
 
 # Parse arguments
 
@@ -178,7 +179,8 @@ txt_logger.info("Optimizer loaded\n")
 #     for l in algo.env.locals:
 #         l.recv()
 #     print("")
-teacher_env.acmodel = acmodel
+student_hist_models = [acmodel]
+teacher_env.student_hist_models = student_hist_models
 # teacher_env.algo = algo
 teacher_env.args = args
 teacher_env.preprocess_obss = preprocess_obss
@@ -190,86 +192,94 @@ update = status["update"]
 start_time = time.time()
 # python3 -m scripts.train --algo ppo --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000
 j = 0
-# algo_teacher = torch_ac.PPOAlgo([teacher_env], acmodel, device, 10, args.discount, args.lr, args.gae_lambda,
-#                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-#                             args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
-
 if args.teach:
     teach_acmodel = ACModel(obs_space, envs[0].action_space, args.mem, args.text)
     teach_acmodel.to(device)
-    algo_teacher = torch_ac.A2CAlgo([teacher_env], teach_acmodel, device, 10, args.discount, args.lr, args.gae_lambda,
-                            args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                            args.optim_alpha, args.optim_eps, preprocess_obss)
+    teacher_hist_models = [teach_acmodel]
+
     print("Starting to teach")
+    if args.historical_averaging:
+        md = copy.deepcopy(teach_acmodel)
+    else:
+        md = teach_acmodel
     while j < args.t_iter:
+        algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, 10, args.discount, args.lr, args.gae_lambda,
+                                args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+                                args.optim_alpha, args.optim_eps, preprocess_obss)
         exps, logs1 = algo_teacher.collect_experiences()
         logs2 = algo_teacher.update_parameters(exps)
         j += 1
+        if args.historical_averaging:
+            teacher_hist_models.append(md)
+            md_index = np.random.choice(range(len(teacher_hist_models)),1)[0]
+            md = copy.deepcopy(teacher_hist_models[md_index])
         print("Finished teaching iteration ", str(j))
 
     teacher_env.close()
     print("Done teaching")
 
-envs = []
-for i in range(args.procs):
-    env = utils.make_env(args.env, args.seed)
-    env.is_teaching = False
-    env.end_pos = [3,1]
-    envs.append(env)
-algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
-                            args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                            args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
-while (num_frames < args.frames and False) or (update <= 5 and args.teach) or (update <= 15 and not args.teach):
-    # Update model parameters
+if True:
+    update = 0
+    envs = []
+    for i in range(args.procs):
+        env = utils.make_env(args.env, args.seed)
+        env.is_teaching = False
+        env.end_pos = [3,1]
+        envs.append(env)
+    algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+                                args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
+    while (num_frames < args.frames) and update < 28:
+        # Update model parameters
 
-    update_start_time = time.time()
-    exps, logs1 = algo.collect_experiences()
-    logs2 = algo.update_parameters(exps)
-    logs = {**logs1, **logs2}
-    update_end_time = time.time()
-    num_frames += logs["num_frames"]
-    update += 1
-    # Print logs
+        update_start_time = time.time()
+        exps, logs1 = algo.collect_experiences()
+        logs2 = algo.update_parameters(exps)
+        logs = {**logs1, **logs2}
+        update_end_time = time.time()
+        num_frames += logs["num_frames"]
+        update += 1
+        # Print logs
 
-    if update % args.log_interval == 0:
-        fps = logs["num_frames"]/(update_end_time - update_start_time)
-        duration = int(time.time() - start_time)
-        return_per_episode = utils.synthesize(logs["return_per_episode"])
-        rreturn_per_episode = utils.synthesize(logs["reshaped_return_per_episode"])
-        num_frames_per_episode = utils.synthesize(logs["num_frames_per_episode"])
-        header = ["update", "frames", "FPS", "duration"]
-        data = [update, num_frames, fps, duration]
-        header += ["rreturn_" + key for key in rreturn_per_episode.keys()]
-        data += rreturn_per_episode.values()
-        header += ["num_frames_" + key for key in num_frames_per_episode.keys()]
-        data += num_frames_per_episode.values()
-        header += ["entropy", "value", "policy_loss", "value_loss", "grad_norm"]
-        data += [logs["entropy"], logs["value"], logs["policy_loss"], logs["value_loss"], logs["grad_norm"]]
+        if update % args.log_interval == 0:
+            fps = logs["num_frames"]/(update_end_time - update_start_time)
+            duration = int(time.time() - start_time)
+            return_per_episode = utils.synthesize(logs["return_per_episode"])
+            rreturn_per_episode = utils.synthesize(logs["reshaped_return_per_episode"])
+            num_frames_per_episode = utils.synthesize(logs["num_frames_per_episode"])
+            header = ["update", "frames", "FPS", "duration"]
+            data = [update, num_frames, fps, duration]
+            header += ["rreturn_" + key for key in rreturn_per_episode.keys()]
+            data += rreturn_per_episode.values()
+            header += ["num_frames_" + key for key in num_frames_per_episode.keys()]
+            data += num_frames_per_episode.values()
+            header += ["entropy", "value", "policy_loss", "value_loss", "grad_norm"]
+            data += [logs["entropy"], logs["value"], logs["policy_loss"], logs["value_loss"], logs["grad_norm"]]
 
-        txt_logger.info(
-            "U {} | F {:06} | FPS {:04.0f} | D {} | rR:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | F:μσmM {:.1f} {:.1f} {} {} | H {:.3f} | V {:.3f} | pL {:.3f} | vL {:.3f} | ∇ {:.3f}"
-            .format(*data))
+            txt_logger.info(
+                "U {} | F {:06} | FPS {:04.0f} | D {} | rR:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | F:μσmM {:.1f} {:.1f} {} {} | H {:.3f} | V {:.3f} | pL {:.3f} | vL {:.3f} | ∇ {:.3f}"
+                .format(*data))
 
-        header += ["return_" + key for key in return_per_episode.keys()]
-        data += return_per_episode.values()
+            header += ["return_" + key for key in return_per_episode.keys()]
+            data += return_per_episode.values()
 
-        if status["num_frames"] == 0:
-            csv_logger.writerow(header)
-        csv_logger.writerow(data)
-        csv_file.flush()
+            if status["num_frames"] == 0:
+                csv_logger.writerow(header)
+            csv_logger.writerow(data)
+            csv_file.flush()
 
-        for field, value in zip(header, data):
-            tb_writer.add_scalar(field, value, num_frames)
+            for field, value in zip(header, data):
+                tb_writer.add_scalar(field, value, num_frames)
 
-    # Save status
+        # Save status
 
-    if (args.save_interval > 0 and update % args.save_interval == 0) or True:
-        status = {"num_frames": num_frames, "update": update,
-                  "model_state": acmodel.state_dict(), "optimizer_state": algo.optimizer.state_dict()}
-        if hasattr(preprocess_obss, "vocab"):
-            status["vocab"] = preprocess_obss.vocab.vocab
-        utils.save_status(status, model_dir)
-        txt_logger.info("Status saved")
+        if (args.save_interval > 0 and update % args.save_interval == 0) or True:
+            status = {"num_frames": num_frames, "update": update,
+                      "model_state": acmodel.state_dict(), "optimizer_state": algo.optimizer.state_dict()}
+            if hasattr(preprocess_obss, "vocab"):
+                status["vocab"] = preprocess_obss.vocab.vocab
+            utils.save_status(status, model_dir)
+            txt_logger.info("Status saved")
 
 
 # evaluation

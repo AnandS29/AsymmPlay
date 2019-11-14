@@ -134,16 +134,25 @@ class TeacherDoorKeyEnv(DoorKeyEnv):
         obs = self.gen_obs()
         if done and self.is_teaching:
             student_return_avg = []
-            for _ in range(1):
-                envs = []
-                for i in range(self.args.procs):
-                    env = gym.make(self.args.env)
-                    env.seed(self.args.seed)
-                    env.is_teaching = False
-                    env.end_pos = self.agent_pos
-                    envs.append(env)
+            envs = []
+            for i in range(self.args.procs):
+                env = gym.make(self.args.env)
+                env.seed(self.args.seed)
+                env.is_teaching = False
+                env.end_pos = self.agent_pos
+                envs.append(env)
+            update = 0
+            num_frames = 0
+
+            md_index = np.random.choice(range(len(self.student_hist_models)),1)[0]
+            if self.args.historical_averaging:
+                md = copy.deepcopy(self.student_hist_models[md_index])
+            else:
+                md = self.student_hist_models[md_index]
+
+            while num_frames < self.args.frames and update<5:
                 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-                algo = torch_ac.PPOAlgo(envs, self.acmodel, device, self.args.frames_per_proc, self.args.discount, self.args.lr, self.args.gae_lambda,
+                algo = torch_ac.PPOAlgo(envs, md, device, self.args.frames_per_proc, self.args.discount, self.args.lr, self.args.gae_lambda,
                                         self.args.entropy_coef, self.args.value_loss_coef, self.args.max_grad_norm, self.args.recurrence,
                                         self.args.optim_eps, self.args.clip_eps, self.args.epochs, self.args.batch_size, self.preprocess_obss)
                 update_start_time = time.time()
@@ -151,7 +160,44 @@ class TeacherDoorKeyEnv(DoorKeyEnv):
                 logs2 = algo.update_parameters(exps)
                 logs = {**logs1, **logs2}
                 update_end_time = time.time()
+                num_frames += logs["num_frames"]
                 student_return_avg.append(self.synthesize(logs["reshaped_return_per_episode"])["mean"])
+                update += 1
+                print(update, end=",")
+                if self.args.historical_averaging:
+                    teacher_hist_models.append(md)
+                    md_index = np.random.choice(range(len(self.student_hist_models)),1)[0]
+                    md = copy.deepcopy(self.student_hist_models[md_index])
+
+                if update % self.args.log_interval == 0 and False:
+                    fps = logs["num_frames"]/(update_end_time - update_start_time)
+                    duration = int(time.time() - start_time)
+                    return_per_episode = utils.synthesize(logs["return_per_episode"])
+                    rreturn_per_episode = utils.synthesize(logs["reshaped_return_per_episode"])
+                    num_frames_per_episode = utils.synthesize(logs["num_frames_per_episode"])
+                    header = ["update", "frames", "FPS", "duration"]
+                    data = [update, num_frames, fps, duration]
+                    header += ["rreturn_" + key for key in rreturn_per_episode.keys()]
+                    data += rreturn_per_episode.values()
+                    header += ["num_frames_" + key for key in num_frames_per_episode.keys()]
+                    data += num_frames_per_episode.values()
+                    header += ["entropy", "value", "policy_loss", "value_loss", "grad_norm"]
+                    data += [logs["entropy"], logs["value"], logs["policy_loss"], logs["value_loss"], logs["grad_norm"]]
+
+                    txt_logger.info(
+                        "U {} | F {:06} | FPS {:04.0f} | D {} | rR:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | F:μσmM {:.1f} {:.1f} {} {} | H {:.3f} | V {:.3f} | pL {:.3f} | vL {:.3f} | ∇ {:.3f}"
+                        .format(*data))
+
+                    header += ["return_" + key for key in return_per_episode.keys()]
+                    data += return_per_episode.values()
+
+                    if status["num_frames"] == 0:
+                        csv_logger.writerow(header)
+                    csv_logger.writerow(data)
+                    csv_file.flush()
+
+                    for field, value in zip(header, data):
+                        tb_writer.add_scalar(field, value, num_frames)
             reward = max([0,self._reward()-numpy.average(student_return_avg)])
             #logs = {**logs1, **logs2}
             #rreturn_per_episode = self.synthesize(logs["reshaped_return_per_episode"])
