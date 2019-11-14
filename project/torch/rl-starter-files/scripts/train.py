@@ -38,6 +38,9 @@ parser.add_argument("--frames", type=int, default=10**7,
 parser.add_argument("--t_iter", type=int, default=5,
                     help="teaching iterations (default: 5)")
 
+parser.add_argument("--historical_averaging", action="store_true", default=False,
+                    help="Use historical averaging")
+
 ## Parameters for main algorithm
 parser.add_argument("--epochs", type=int, default=4,
                     help="number of epochs for PPO (default: 4)")
@@ -77,6 +80,7 @@ parser.add_argument("--episodes", type=int, default=10, help="number of episodes
 
 args = parser.parse_args()
 
+print("Memory ",args.recurrence)
 args.mem = args.recurrence > 1
 
 # Set run dir
@@ -138,6 +142,7 @@ txt_logger.info("Observations preprocessor loaded")
 # Load model
 
 acmodel = ACModel(obs_space, envs[0].action_space, args.mem, args.text)
+# historical_models = [acmodel]
 if "model_state" in status:
     acmodel.load_state_dict(status["model_state"])
 acmodel.to(device)
@@ -146,16 +151,16 @@ txt_logger.info("{}\n".format(acmodel))
 
 # Load algo
 
-if args.algo == "a2c":
-    algo = torch_ac.A2CAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
-                            args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                            args.optim_alpha, args.optim_eps, preprocess_obss)
-elif args.algo == "ppo":
-    algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
-                            args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                            args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
-else:
-    raise ValueError("Incorrect algorithm name: {}".format(args.algo))
+# if args.algo == "a2c":
+#     algo = torch_ac.A2CAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+#                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+#                             args.optim_alpha, args.optim_eps, preprocess_obss)
+# elif args.algo == "ppo":
+#     algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+#                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+#                             args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
+# else:
+#     raise ValueError("Incorrect algorithm name: {}".format(args.algo))
 
 if "optimizer_state" in status:
     algo.optimizer.load_state_dict(status["optimizer_state"])
@@ -174,7 +179,7 @@ txt_logger.info("Optimizer loaded\n")
 #         l.recv()
 #     print("")
 teacher_env.acmodel = acmodel
-teacher_env.algo = algo
+# teacher_env.algo = algo
 teacher_env.args = args
 teacher_env.preprocess_obss = preprocess_obss
 
@@ -190,17 +195,13 @@ j = 0
 #                             args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
 
 if args.teach:
-    algo_teacher = torch_ac.A2CAlgo([teacher_env], acmodel, device, 10, args.discount, args.lr, args.gae_lambda,
+    teach_acmodel = ACModel(obs_space, envs[0].action_space, args.mem, args.text)
+    teach_acmodel.to(device)
+    algo_teacher = torch_ac.A2CAlgo([teacher_env], teach_acmodel, device, 10, args.discount, args.lr, args.gae_lambda,
                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                             args.optim_alpha, args.optim_eps, preprocess_obss)
     print("Starting to teach")
     while j < args.t_iter:
-        # observation = teacher_env.reset()
-        # for t in range(100):
-        #     action = teacher_env.action_space.sample()
-        #     observation, reward, done, info = teacher_env.step(action)
-        #     if done:
-        #         break
         exps, logs1 = algo_teacher.collect_experiences()
         logs2 = algo_teacher.update_parameters(exps)
         j += 1

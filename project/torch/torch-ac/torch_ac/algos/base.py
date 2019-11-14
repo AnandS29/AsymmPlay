@@ -129,8 +129,10 @@ class BaseAlgo(ABC):
             preprocessed_obs = self.preprocess_obss(self.obs, device=self.device)
             with torch.no_grad():
                 if self.acmodel.recurrent:
+                    # print("calling recurrent function")
                     dist, value, memory = self.acmodel(preprocessed_obs, self.memory * self.mask.unsqueeze(1))
                 else:
+                    # print("calling function")
                     dist, value = self.acmodel(preprocessed_obs)
             action = dist.sample()
 

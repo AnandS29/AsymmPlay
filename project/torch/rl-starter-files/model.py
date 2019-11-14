@@ -14,7 +14,6 @@ def init_params(m):
         if m.bias is not None:
             m.bias.data.fill_(0)
 
-
 class ACModel(nn.Module, torch_ac.RecurrentACModel):
     def __init__(self, obs_space, action_space, use_memory=False, use_text=False):
         super().__init__()
@@ -79,6 +78,7 @@ class ACModel(nn.Module, torch_ac.RecurrentACModel):
         return self.image_embedding_size
 
     def forward(self, obs, memory):
+        # print("Forward function has been called")
         x = obs.image.transpose(1, 3).transpose(2, 3)
         x = self.image_conv(x)
         x = x.reshape(x.shape[0], -1)
