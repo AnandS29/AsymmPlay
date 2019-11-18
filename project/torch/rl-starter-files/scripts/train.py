@@ -87,7 +87,8 @@ args.mem = args.recurrence > 1
 # Set run dir
 
 date = datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S")
-default_model_name = f"{args.env}_{args.algo}_seed{args.seed}_{date}"
+#default_model_name = f"{args.env}_{args.algo}_seed{args.seed}_{date}"
+default_model_name = "{args.env}_{args.algo}_seed{args.seed}_{date}"
 
 model_name = args.model or default_model_name
 model_dir = utils.get_model_dir(model_name)
@@ -110,7 +111,8 @@ utils.seed(args.seed)
 # Set device
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-txt_logger.info(f"Device: {device}\n")
+#txt_logger.info(f"Device: {device}\n")
+txt_logger.info("Device: {device}\n")
 
 # Load environments
 envs = []
@@ -229,7 +231,8 @@ if True:
     algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                 args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
-    while (num_frames < args.frames) and update < 28:
+    #while (num_frames < args.frames) and update < 28:
+    while (num_frames < args.frames):
         # Update model parameters
 
         update_start_time = time.time()
@@ -289,7 +292,8 @@ utils.seed(args.seed)
 # Set device
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(f"Device: {device}\n")
+#print(f"Device: {device}\n")
+print("Device: {device}\n")
 
 # Load environments
 

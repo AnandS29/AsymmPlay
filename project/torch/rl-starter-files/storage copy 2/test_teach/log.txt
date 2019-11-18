@@ -1,0 +1,49 @@
+/Users/logancross/Documents/DeepRL/AsymmPlay/project/torch/rl-starter-files/scripts/train.py --algo ppo --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --model test_teach --teach
+
+Namespace(algo='ppo', argmax=False, batch_size=256, clip_eps=0.2, discount=0.99, entropy_coef=0.01, env='MiniGrid-TeacherDoorKey-5x5-v0', episodes=10, epochs=4, frames=80000, frames_per_proc=None, gae_lambda=0.95, historical_averaging=False, log_interval=1, lr=0.001, max_grad_norm=0.5, mem=False, model='test_teach', optim_alpha=0.99, optim_eps=1e-08, procs=8, recurrence=1, save_interval=10, seed=1, t_iter=5, teach=True, text=False, value_loss_coef=0.5, worst_episodes_to_show=10)
+
+Device: {device}
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 16, kernel_size=(2, 2), stride=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
+    (3): Conv2d(16, 32, kernel_size=(2, 2), stride=(1, 1))
+    (4): ReLU()
+    (5): Conv2d(32, 64, kernel_size=(2, 2), stride=(1, 1))
+    (6): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 1 | F 001024 | FPS 1699 | D 8 | rR:μσmM 0.10 0.26 0.00 0.78 | F:μσmM 7.5 19.8 0.0 60.0 | H 1.706 | V 0.636 | pL 0.105 | vL 0.001 | ∇ 0.079
+Status saved
+U 2 | F 002048 | FPS 1732 | D 9 | rR:μσmM 0.14 0.25 0.00 0.78 | F:μσmM 221.9 61.9 60.0 250.0 | H 1.659 | V 0.553 | pL 0.159 | vL 0.017 | ∇ 0.203
+Status saved
+U 3 | F 003072 | FPS 1373 | D 10 | rR:μσmM 0.04 0.07 0.00 0.21 | F:μσmM 245.6 9.8 220.0 250.0 | H 1.728 | V 0.481 | pL 0.091 | vL 0.003 | ∇ 0.074
+Status saved
+U 4 | F 004096 | FPS 1781 | D 10 | rR:μσmM 0.03 0.07 0.00 0.20 | F:μσmM 246.5 9.3 222.0 250.0 | H 1.816 | V 0.361 | pL 0.118 | vL 0.009 | ∇ 0.069
+Status saved
+U 5 | F 005120 | FPS 1734 | D 11 | rR:μσmM 0.03 0.07 0.00 0.20 | F:μσmM 246.5 9.3 222.0 250.0 | H 1.858 | V 0.295 | pL 0.063 | vL 0.002 | ∇ 0.076
+Status saved
+U 6 | F 006144 | FPS 1774 | D 11 | rR:μσmM 0.04 0.08 0.00 0.24 | F:μσmM 244.8 13.2 210.0 250.0 | H 1.884 | V 0.204 | pL 0.071 | vL 0.004 | ∇ 0.065
+Status saved
