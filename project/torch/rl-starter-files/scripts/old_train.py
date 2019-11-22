@@ -22,6 +22,8 @@ parser.add_argument("--teacher_algo", required=True,
                     help="algorithm to use: a2c | ppo (REQUIRED)")
 parser.add_argument("--student_algo", required=True,
                     help="algorithm to use: a2c | ppo (REQUIRED)")
+parser.add_argument("--teach", action="store_true", default=False,
+                    help="teach or not")
 parser.add_argument("--env", required=True,
                     help="name of the environment to train on (REQUIRED)")
 parser.add_argument("--model", default=None,
@@ -45,8 +47,8 @@ parser.add_argument("--s_iters_per_teaching", type=int, default=5,
 parser.add_argument("--nt_iters", type=int, default=0,
                     help="non-teaching iterations (default: 5)")
 
-parser.add_argument("--historical_averaging", type=float, default=0,
-                    help="probability for historical averaging (default: 0)")
+parser.add_argument("--historical_averaging", action="store_true", default=False,
+                    help="Use historical averaging")
 
 ## Parameters for main algorithm
 parser.add_argument("--epochs", type=int, default=4,
@@ -95,8 +97,7 @@ args.mem = args.recurrence > 1
 # Set run dir
 
 date = datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S")
-#default_model_name = f"{args.env}_{args.algo}_seed{args.seed}_{date}"
-default_model_name = "{args.env}_{args.algo}_seed{args.seed}_{date}"
+default_model_name = f"{args.env}_{args.algo}_seed{args.seed}_{date}"
 
 model_name = args.model or default_model_name
 model_dir = utils.get_model_dir(model_name)
@@ -119,8 +120,7 @@ utils.seed(args.seed)
 # Set device
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-#txt_logger.info(f"Device: {device}\n")
-txt_logger.info("Device: {device}\n")
+txt_logger.info(f"Device: {device}\n")
 
 # Load environments
 envs = []
@@ -177,6 +177,18 @@ if "optimizer_state" in status:
     algo.optimizer.load_state_dict(status["optimizer_state"])
 txt_logger.info("Optimizer loaded\n")
 
+# for _ in range(10):
+#     envs = []
+#     for i in range(args.procs):
+#         env = utils.make_env(args.env, args.seed)
+#         env.is_teaching = False
+#         env.end_pos = [1,1]
+#         envs.append(env)
+#     algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda, args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+#                             args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
+#     for l in algo.env.locals:
+#         l.recv()
+#     print("")
 student_hist_models = [acmodel]
 teacher_env.student_hist_models = student_hist_models
 # teacher_env.algo = algo
@@ -196,26 +208,27 @@ if args.t_iters > 0:
     teacher_hist_models = [teach_acmodel]
 
     print("Starting to teach")
-    if np.random.random() < args.historical_averaging:
+    if args.historical_averaging:
         md = copy.deepcopy(teach_acmodel)
     else:
         md = teach_acmodel
     while j < args.t_iters:
-        algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, 10, args.discount, args.lr, args.gae_lambda,
+        algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, args.frames_teacher, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                 args.optim_alpha, args.optim_eps, preprocess_obss)
         exps, logs1 = algo_teacher.collect_experiences()
         logs2 = algo_teacher.update_parameters(exps)
         j += 1
-        if np.random.random() < args.historical_averaging:
+
+        if args.historical_averaging:
             teacher_hist_models.append(md)
             md_index = np.random.choice(range(len(teacher_hist_models)),1)[0]
             md = copy.deepcopy(teacher_hist_models[md_index])
+
         print("Finished teaching iteration ", str(j))
 
     teacher_env.close()
     print("Done teaching")
-
 
 if args.nt_iters > 0:
     update = 0
@@ -289,8 +302,7 @@ utils.seed(args.seed)
 # Set device
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-#print(f"Device: {device}\n")
-print("Device: {device}\n")
+print(f"Device: {device}\n")
 
 # Load environments
 

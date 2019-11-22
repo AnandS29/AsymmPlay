@@ -9,7 +9,7 @@ import tensorboardX
 import sys
 import collections
 import numpy
-import copy
+
 
 class DoorKeyEnv(MiniGridEnv):
     """
@@ -145,13 +145,13 @@ class TeacherDoorKeyEnv(DoorKeyEnv):
             num_frames = 0
 
             md_index = np.random.choice(range(len(self.student_hist_models)),1)[0]
-            if np.random.random() < self.args.historical_averaging:
+            if self.args.historical_averaging:
                 md = copy.deepcopy(self.student_hist_models[md_index])
             else:
                 md = self.student_hist_models[md_index]
 
             # while num_frames < self.args.frames and update<5:
-            while update < self.args.s_iters_per_teaching:
+            while update < args.s_iters_per_teaching:
                 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
                 algo = torch_ac.PPOAlgo(envs, md, device, self.args.frames_per_proc, self.args.discount, self.args.lr, self.args.gae_lambda,
                                         self.args.entropy_coef, self.args.value_loss_coef, self.args.max_grad_norm, self.args.recurrence,
@@ -165,9 +165,9 @@ class TeacherDoorKeyEnv(DoorKeyEnv):
                 student_return_avg.append(self.synthesize(logs["reshaped_return_per_episode"])["mean"])
                 update += 1
                 print(update, end=",")
-
-                if np.random.random() < self.args.historical_averaging:
-                    self.student_hist_models.append(md)
+                
+                if self.args.historical_averaging:
+                    teacher_hist_models.append(md)
                     md_index = np.random.choice(range(len(self.student_hist_models)),1)[0]
                     md = copy.deepcopy(self.student_hist_models[md_index])
 
@@ -292,3 +292,4 @@ register(
     id='MiniGrid-DoorKey-16x16-v0',
     entry_point='gym_minigrid.envs:DoorKeyEnv16x16'
 )
+
