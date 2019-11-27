@@ -25,3 +25,16 @@ Possible next steps:
   Compare selfplay with just random walks of a teacher - it performs better from my tests (though need to formalize a bit more)
 
 #0.71,0.94
+Old test (may or may not work):
+python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 50 --model nt_11_21_3_1 --teacher_algo a2c --student_algo ppo
+
+python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 50 --t_iters 10 --s_iters_per_teaching 5 --model t_11_21_3_1 --teacher_algo a2c --student_algo ppo
+
+python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 50 --t_iters 10 --s_iters_per_teaching 5 --model t_ha_11_21_3_1 --teacher_algo a2c --student_algo ppo --historical_averaging 0.2
+Newer tests:
+
+python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 50 --model nt_11_27_1_3_o_2 --teacher_algo a2c --student_algo ppo --seed 2
+
+python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 50 --t_iters 10 --s_iters_per_teaching 5 --model t_11_27_1_3_o_2 --teacher_algo a2c --student_algo ppo --seed 2
+
+python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 50 --t_iters 10 --s_iters_per_teaching 5 --model t_ha_11_27_1_3_o_2 --teacher_algo a2c --student_algo ppo --historical_averaging 0.2 --seed 2

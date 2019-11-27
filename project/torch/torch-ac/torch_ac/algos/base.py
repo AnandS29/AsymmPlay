@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import torch
+import copy
 
 from torch_ac.format import default_preprocess_obss
 from torch_ac.utils import DictList, ParallelEnv
@@ -102,6 +103,9 @@ class BaseAlgo(ABC):
         self.log_reshaped_return = [0] * self.num_procs
         self.log_num_frames = [0] * self.num_procs
 
+        self.intra = False
+        self.historical_models = [self.acmodel]
+
     def collect_experiences(self):
         """Collects rollouts and computes advantages.
 
@@ -122,6 +126,12 @@ class BaseAlgo(ABC):
             Useful stats about the training process, including the average
             reward, policy loss, value loss, etc.
         """
+
+        #md_index = np.random.choice(range(len(self.historical_models)),1)[0]
+        # if np.random.random() < self.args.historical_averaging and self.args.intra:
+        #     self.ac_model = copy.deepcopy(self.historical_models[md_index])
+        # else:
+        #     self.ac_model = self.historical_models[-1]
 
         for i in range(self.num_frames_per_proc):
             # Do one agent-environment interaction

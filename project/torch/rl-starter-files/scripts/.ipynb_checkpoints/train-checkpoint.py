@@ -45,10 +45,8 @@ parser.add_argument("--s_iters_per_teaching", type=int, default=5,
 parser.add_argument("--nt_iters", type=int, default=0,
                     help="non-teaching iterations (default: 5)")
 
-parser.add_argument("--historical_averaging", type=float, default=0,
-                    help="probability for historical averaging (default: 0)")
-parser.add_argument("--sampling_strategy", required=False, default="uniform",
-                    help="sampling strategy for historical averaging (default: uniform)")
+parser.add_argument("--historical_averaging", action="store_true", default=False,
+                    help="Use historical averaging")
 
 ## Parameters for main algorithm
 parser.add_argument("--epochs", type=int, default=4,
@@ -185,14 +183,6 @@ teacher_env.student_hist_models = student_hist_models
 teacher_env.args = args
 teacher_env.preprocess_obss = preprocess_obss
 
-# Sampling distribution for historical historical averaging
-def sampling_dist(n,strategy=args.sampling_strategy):
-    if strategy == "uniform":
-        return np.ones(n)/n
-    elif strategy == "exponential":
-        prob = np.array([1.2 ** i for i in range(n)], dtype=np.float)
-        prob = prob/np.sum(prob)
-        return prob
 # Train model
 
 num_frames = status["num_frames"]
@@ -200,7 +190,7 @@ update = status["update"]
 start_time = time.time()
 # python3 -m scripts.train --algo ppo --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000
 j = 0
-if args.t_iters > 0:
+if args.t_iter > 0:
     teach_acmodel = ACModel(obs_space, envs[0].action_space, args.mem, args.text)
     teach_acmodel.to(device)
     teacher_hist_models = [teach_acmodel]
@@ -210,7 +200,7 @@ if args.t_iters > 0:
         md = copy.deepcopy(teach_acmodel)
     else:
         md = teach_acmodel
-    while j < args.t_iters:
+    while j < args.t_iter:
         algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, 10, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                 args.optim_alpha, args.optim_eps, preprocess_obss)
@@ -219,14 +209,14 @@ if args.t_iters > 0:
         j += 1
         if np.random.random() < args.historical_averaging:
             teacher_hist_models.append(md)
-            md_index = np.random.choice(range(len(teacher_hist_models)),1,p=sampling_dist(len(teacher_hist_models)))[0]
+            md_index = np.random.choice(range(len(teacher_hist_models)),1)[0]
             md = copy.deepcopy(teacher_hist_models[md_index])
         print("Finished teaching iteration ", str(j))
 
     teacher_env.close()
     print("Done teaching")
 
-
+    
 if args.nt_iters > 0:
     update = 0
     envs = []

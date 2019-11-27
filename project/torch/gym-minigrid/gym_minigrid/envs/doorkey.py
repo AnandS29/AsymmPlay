@@ -144,7 +144,7 @@ class TeacherDoorKeyEnv(DoorKeyEnv):
             update = 0
             num_frames = 0
 
-            md_index = np.random.choice(range(len(self.student_hist_models)),1)[0]
+            md_index = np.random.choice(range(len(self.student_hist_models)),1,p=self.sampling_dist(len(self.student_hist_models),strategy=self.args.sampling_strategy))[0]
             if np.random.random() < self.args.historical_averaging:
                 md = copy.deepcopy(self.student_hist_models[md_index])
             else:
@@ -168,7 +168,7 @@ class TeacherDoorKeyEnv(DoorKeyEnv):
 
                 if np.random.random() < self.args.historical_averaging:
                     self.student_hist_models.append(md)
-                    md_index = np.random.choice(range(len(self.student_hist_models)),1)[0]
+                    md_index = np.random.choice(range(len(self.student_hist_models)),1,p=self.sampling_dist(len(self.student_hist_models),strategy=self.args.sampling_strategy))[0]
                     md = copy.deepcopy(self.student_hist_models[md_index])
 
                 if update % self.args.log_interval == 0 and False:
@@ -205,6 +205,14 @@ class TeacherDoorKeyEnv(DoorKeyEnv):
             #rreturn_per_episode = self.synthesize(logs["reshaped_return_per_episode"])
             #print(rreturn_per_episode)
         return obs, reward, done, {"agent_pos": self.agent_pos}
+
+    def sampling_dist(self,n,strategy="uniform"):
+        if strategy == "uniform":
+            return np.ones(n)/n
+        elif strategy == "exponential":
+            prob = np.array([1.2 ** i for i in range(n)], dtype=np.float)
+            prob = prob/np.sum(prob)
+            return prob
 
     def _gen_grid(self, width, height):
         # Create an empty grid
