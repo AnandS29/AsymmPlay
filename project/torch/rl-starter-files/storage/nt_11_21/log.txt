@@ -172,3 +172,9 @@ U 49 | F 050176 | FPS 2279 | D 21 | rR:μσmM 0.92 0.03 0.85 0.97 | F:μσmM 20.
 Status saved
 U 50 | F 051200 | FPS 2247 | D 21 | rR:μσmM 0.93 0.02 0.85 0.97 | F:μσmM 19.3 6.8 8.0 41.0 | H 1.395 | V 0.829 | pL -0.006 | vL 0.002 | ∇ 0.035
 Status saved
+/Users/sandy/Dropbox/berkeley/projects/AsymmPlay/project/torch/rl-starter-files/scripts/train.py --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 50 --model nt_11_21 --teacher_algo a2c --student_algo ppo
+
+Namespace(argmax=False, batch_size=256, clip_eps=0.2, discount=0.99, entropy_coef=0.01, env='MiniGrid-TeacherDoorKey-5x5-v0', episodes=10, epochs=4, frames=80000, frames_per_proc=None, frames_teacher=10, gae_lambda=0.95, historical_averaging=0, log_interval=1, lr=0.001, max_grad_norm=0.5, mem=False, model='nt_11_21', nt_iters=50, optim_alpha=0.99, optim_eps=1e-08, procs=8, recurrence=1, s_iters_per_teaching=5, sampling_strategy='uniform', save_interval=10, seed=1, student_algo='ppo', t_iters=0, teacher_algo='a2c', teacher_model=None, text=False, value_loss_coef=0.5, worst_episodes_to_show=10)
+
+Device: {device}
+
