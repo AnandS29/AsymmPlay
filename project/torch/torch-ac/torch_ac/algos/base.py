@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import torch
 import copy
+import numpy as np
 
 from torch_ac.format import default_preprocess_obss
 from torch_ac.utils import DictList, ParallelEnv
@@ -127,11 +128,11 @@ class BaseAlgo(ABC):
             reward, policy loss, value loss, etc.
         """
 
-        #md_index = np.random.choice(range(len(self.historical_models)),1)[0]
-        # if np.random.random() < self.args.historical_averaging and self.args.intra:
-        #     self.ac_model = copy.deepcopy(self.historical_models[md_index])
-        # else:
-        #     self.ac_model = self.historical_models[-1]
+        md_index = np.random.choice(range(len(self.historical_models)),1)[0]
+        if np.random.random() < self.args.historical_averaging and self.args.intra:
+            self.ac_model = copy.deepcopy(self.historical_models[md_index])
+        else:
+            self.ac_model = self.historical_models[-1]
 
         for i in range(self.num_frames_per_proc):
             # Do one agent-environment interaction
@@ -184,6 +185,11 @@ class BaseAlgo(ABC):
             self.log_episode_return *= self.mask
             self.log_episode_reshaped_return *= self.mask
             self.log_episode_num_frames *= self.mask
+
+            if np.random.random() < self.args.historical_averaging and self.args.intra:
+                self.historical_models.append(md)
+                md_index = np.random.choice(range(len(self.student_hist_models)),1,p=self.sampling_dist(len(self.student_hist_models),strategy=self.args.sampling_strategy))[0]
+                md = copy.deepcopy(self.student_hist_models[md_index])
 
         # Add advantage and return to experiences
 
@@ -248,6 +254,14 @@ class BaseAlgo(ABC):
         self.log_num_frames = self.log_num_frames[-self.num_procs:]
 
         return exps, logs
+
+    def sampling_dist(self,n,strategy="uniform"):
+        if strategy == "uniform":
+            return np.ones(n)/n
+        elif strategy == "exponential":
+            prob = np.array([1.2 ** i for i in range(n)], dtype=np.float)
+            prob = prob/np.sum(prob)
+            return prob
 
     @abstractmethod
     def update_parameters(self):

@@ -38,3 +38,5 @@ python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10
 python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 50 --t_iters 10 --s_iters_per_teaching 5 --model t_11_27_1_3_o_2 --teacher_algo a2c --student_algo ppo --seed 2
 
 python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 50 --t_iters 10 --s_iters_per_teaching 5 --model t_ha_11_27_1_3_o_2 --teacher_algo a2c --student_algo ppo --historical_averaging 0.2 --seed 2
+
+python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 10 --t_iters 0 --s_iters_per_teaching 5 --model eval_test_1 --teacher_algo a2c --student_algo ppo

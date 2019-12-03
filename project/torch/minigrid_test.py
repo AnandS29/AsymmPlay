@@ -12,11 +12,11 @@ from gym_minigrid.envs import DoorKeyEnv
 from gym_minigrid.wrappers import *
 # env_name = env_list[0]
 # #print(env_list)
-env = gym.make("MiniGrid-TeacherDoorKey-5x5-v0")
+env = gym.make("MiniGrid-TeacherDoorKey-10x10-v0")
 #print(env.observation_space.spaces["image"].shape)
 #obs_space.spaces["image"].shape
 env.is_teaching = False
-env.end_pos = [3,1]
+env.end_pos = [5,1]
 for i_episode in range(10):
     observation = env.reset()
     for t in range(1000):

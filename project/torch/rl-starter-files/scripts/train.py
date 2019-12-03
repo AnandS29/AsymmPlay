@@ -32,6 +32,8 @@ parser.add_argument("--seed", type=int, default=1,
                     help="random seed (default: 1)")
 parser.add_argument("--log-interval", type=int, default=1,
                     help="number of updates between two logs (default: 1)")
+parser.add_argument("--eval-interval", type=int, default=1,
+                    help="number of updates between two evals (default: 1)")
 parser.add_argument("--save-interval", type=int, default=1,
                     help="number of updates between two saves (default: 1, 0 means no saving)")
 parser.add_argument("--procs", type=int, default=16,
@@ -45,10 +47,17 @@ parser.add_argument("--s_iters_per_teaching", type=int, default=5,
 parser.add_argument("--nt_iters", type=int, default=0,
                     help="non-teaching iterations (default: 5)")
 
+parser.add_argument("--rand_goal", action="store_true", default=False,
+                    help="use random goals for evaluation")
+parser.add_argument('-e','--eval_goal', nargs='+', type=int, default=[3,1], help='evaluation goal', required=False)
+parser.add_argument('-t','--train_goal', nargs='+', type=int, default=[1,3], help='training goal', required=True)
+
 parser.add_argument("--historical_averaging", type=float, default=0,
                     help="probability for historical averaging (default: 0)")
 parser.add_argument("--sampling_strategy", required=False, default="uniform",
                     help="sampling strategy for historical averaging (default: uniform)")
+parser.add_argument("--intra", action="store_true", default=False,
+                    help="use intra historical averaging")
 
 ## Parameters for main algorithm
 parser.add_argument("--epochs", type=int, default=4,
@@ -130,7 +139,7 @@ s = 10
 for i in range(args.procs):
     env = utils.make_env(args.env, args.seed)
     env.is_teaching = False
-    env.end_pos = [1,1]
+    env.end_pos = args.train_goal
     envs.append(env)
 txt_logger.info("Environments loaded\n")
 
@@ -175,7 +184,7 @@ txt_logger.info("{}\n".format(acmodel))
 # else:
 #     raise ValueError("Incorrect algorithm name: {}".format(args.algo))
 
-if "optimizer_state" in status:
+if "optimizer_state" in status and False:
     algo.optimizer.load_state_dict(status["optimizer_state"])
 txt_logger.info("Optimizer loaded\n")
 
@@ -183,7 +192,71 @@ student_hist_models = [acmodel]
 teacher_env.student_hist_models = student_hist_models
 # teacher_env.algo = algo
 teacher_env.args = args
+teacher_env.model_dir = model_dir
 teacher_env.preprocess_obss = preprocess_obss
+
+def run_eval():
+    envs = []
+    for i in range(1):
+        env = utils.make_env(args.env, args.seed + 10000 * i)
+        env.is_teaching = False
+        env.end_pos = args.eval_goal
+        envs.append(env)
+    env = ParallelEnv(envs)
+
+    # Load agent
+
+    model_dir = utils.get_model_dir(args.model)
+    agent = utils.Agent(env.observation_space, env.action_space, model_dir, device, args.argmax, args.procs)
+
+    # Initialize logs
+
+    logs = {"num_frames_per_episode": [], "return_per_episode": []}
+
+    # Run agent
+
+    start_time = time.time()
+
+    obss = env.reset()
+
+    log_done_counter = 0
+    log_episode_return = torch.zeros(args.procs, device=device)
+    log_episode_num_frames = torch.zeros(args.procs, device=device)
+    positions = []
+    while log_done_counter < args.episodes:
+        actions = agent.get_actions(obss)
+        obss, rewards, dones, infos = env.step(actions)
+        positions.extend([info["agent_pos"] for info in infos])
+        agent.analyze_feedbacks(rewards, dones)
+
+        log_episode_return += torch.tensor(rewards, device=device, dtype=torch.float)
+        log_episode_num_frames += torch.ones(args.procs, device=device)
+
+        for i, done in enumerate(dones):
+            if done:
+                log_done_counter += 1
+                logs["return_per_episode"].append(log_episode_return[i].item())
+                logs["num_frames_per_episode"].append(log_episode_num_frames[i].item())
+
+        mask = 1 - torch.tensor(dones, device=device, dtype=torch.float)
+        log_episode_return *= mask
+        log_episode_num_frames *= mask
+
+    end_time = time.time()
+
+    # Print logs
+
+    num_frames = sum(logs["num_frames_per_episode"])
+    fps = num_frames/(end_time - start_time)
+    duration = int(end_time - start_time)
+    return_per_episode = utils.synthesize(logs["return_per_episode"])
+    num_frames_per_episode = utils.synthesize(logs["num_frames_per_episode"])
+
+    print("Eval: F {} | FPS {:.0f} | D {} | R:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | F:μσmM {:.1f} {:.1f} {} {}"
+          .format(num_frames, fps, duration,
+                  *return_per_episode.values(),
+                  *num_frames_per_episode.values()))
+    return return_per_episode
 
 # Sampling distribution for historical historical averaging
 def sampling_dist(n,strategy=args.sampling_strategy):
@@ -206,21 +279,27 @@ if args.t_iters > 0:
     teacher_hist_models = [teach_acmodel]
 
     print("Starting to teach")
-    if np.random.random() < args.historical_averaging:
+    if np.random.random() < args.historical_averaging and not args.intra:
         md = copy.deepcopy(teach_acmodel)
     else:
         md = teach_acmodel
+
     while j < args.t_iters:
         algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, 10, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                 args.optim_alpha, args.optim_eps, preprocess_obss)
+        algo_teacher.args = args
         exps, logs1 = algo_teacher.collect_experiences()
         logs2 = algo_teacher.update_parameters(exps)
         j += 1
-        if np.random.random() < args.historical_averaging:
-            teacher_hist_models.append(md)
+
+        #run_eval()
+
+        teacher_hist_models.append(copy.deepcopy(md))
+        if np.random.random() < args.historical_averaging and not args.intra:
             md_index = np.random.choice(range(len(teacher_hist_models)),1,p=sampling_dist(len(teacher_hist_models)))[0]
             md = copy.deepcopy(teacher_hist_models[md_index])
+
         print("Finished teaching iteration ", str(j))
 
     teacher_env.close()
@@ -233,11 +312,12 @@ if args.nt_iters > 0:
     for i in range(args.procs):
         env = utils.make_env(args.env, args.seed)
         env.is_teaching = False
-        env.end_pos = [3,1]
+        env.end_pos = args.train_goal
         envs.append(env)
     algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                 args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
+    algo.args = args
     #while (num_frames < args.frames) and update < 28:
     while update < args.nt_iters:
         # Update model parameters
@@ -250,6 +330,17 @@ if args.nt_iters > 0:
         num_frames += logs["num_frames"]
         update += 1
         # Print logs
+
+
+                # Save status
+
+        if (args.save_interval > 0 and update % args.save_interval == 0) or True:
+            status = {"num_frames": num_frames, "update": update,
+                      "model_state": acmodel.state_dict(), "optimizer_state": algo.optimizer.state_dict()}
+            if hasattr(preprocess_obss, "vocab"):
+                status["vocab"] = preprocess_obss.vocab.vocab
+            utils.save_status(status, model_dir)
+            txt_logger.info("Status saved")
 
         if update % args.log_interval == 0:
             fps = logs["num_frames"]/(update_end_time - update_start_time)
@@ -266,12 +357,20 @@ if args.nt_iters > 0:
             header += ["entropy", "value", "policy_loss", "value_loss", "grad_norm"]
             data += [logs["entropy"], logs["value"], logs["policy_loss"], logs["value_loss"], logs["grad_norm"]]
 
+            print("Printing training results ...")
             txt_logger.info(
                 "U {} | F {:06} | FPS {:04.0f} | D {} | rR:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | F:μσmM {:.1f} {:.1f} {} {} | H {:.3f} | V {:.3f} | pL {:.3f} | vL {:.3f} | ∇ {:.3f}"
                 .format(*data))
 
-            header += ["return_" + key for key in return_per_episode.keys()]
-            data += return_per_episode.values()
+            if update % args.eval_interval == 0:
+                print("Running eval ...")
+                eval_rets = run_eval()
+
+                header += ["eval_return_" + key for key in return_per_episode.keys()]
+                data += return_per_episode.values()
+
+            header += ["return_" + key for key in eval_rets.keys()]
+            data += eval_rets.values()
 
             if status["num_frames"] == 0:
                 csv_logger.writerow(header)
@@ -280,16 +379,6 @@ if args.nt_iters > 0:
 
             for field, value in zip(header, data):
                 tb_writer.add_scalar(field, value, num_frames)
-
-        # Save status
-
-        if (args.save_interval > 0 and update % args.save_interval == 0) or True:
-            status = {"num_frames": num_frames, "update": update,
-                      "model_state": acmodel.state_dict(), "optimizer_state": algo.optimizer.state_dict()}
-            if hasattr(preprocess_obss, "vocab"):
-                status["vocab"] = preprocess_obss.vocab.vocab
-            utils.save_status(status, model_dir)
-            txt_logger.info("Status saved")
 
 
 # evaluation
@@ -308,7 +397,7 @@ envs = []
 for i in range(1):
     env = utils.make_env(args.env, args.seed + 10000 * i)
     env.is_teaching = False
-    env.end_pos = [3,1]
+    env.end_pos = args.eval_goal
     envs.append(env)
 env = ParallelEnv(envs)
 print("Environments loaded\n")
