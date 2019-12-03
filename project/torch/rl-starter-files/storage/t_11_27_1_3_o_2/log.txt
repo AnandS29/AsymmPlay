@@ -135,3 +135,38 @@ U 49 | F 050176 | FPS 2091 | D 65 | rR:μσmM 0.93 0.04 0.67 0.97 | F:μσmM 18.
 Status saved
 U 50 | F 051200 | FPS 2082 | D 66 | rR:μσmM 0.94 0.05 0.63 0.97 | F:μσmM 17.3 12.5 8.0 104.0 | H 1.291 | V 0.854 | pL -0.004 | vL 0.003 | ∇ 0.073
 Status saved
+/Users/anandsranjan/Desktop/AsymmPlay/project/torch/rl-starter-files/scripts/train.py --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 50 --t_iters 10 --s_iters_per_teaching 5 --model t_11_27_1_3_o_2 --teacher_algo a2c --student_algo ppo --seed 2
+
+Namespace(argmax=False, batch_size=256, clip_eps=0.2, discount=0.99, entropy_coef=0.01, env='MiniGrid-TeacherDoorKey-5x5-v0', episodes=10, epochs=4, frames=80000, frames_per_proc=None, frames_teacher=10, gae_lambda=0.95, historical_averaging=0, intra=False, log_interval=1, lr=0.001, max_grad_norm=0.5, mem=False, model='t_11_27_1_3_o_2', nt_iters=50, optim_alpha=0.99, optim_eps=1e-08, procs=8, recurrence=1, s_iters_per_teaching=5, sampling_strategy='uniform', save_interval=10, seed=2, student_algo='ppo', t_iters=10, teacher_algo='a2c', teacher_model=None, text=False, value_loss_coef=0.5, worst_episodes_to_show=10)
+
+Device: {device}
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 16, kernel_size=(2, 2), stride=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
+    (3): Conv2d(16, 32, kernel_size=(2, 2), stride=(1, 1))
+    (4): ReLU()
+    (5): Conv2d(32, 64, kernel_size=(2, 2), stride=(1, 1))
+    (6): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+

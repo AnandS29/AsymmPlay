@@ -10,6 +10,7 @@ import sys
 import collections
 import numpy
 import copy
+# import utils
 
 class DoorKeyEnv(MiniGridEnv):
     """
@@ -145,7 +146,7 @@ class TeacherDoorKeyEnv(DoorKeyEnv):
             num_frames = 0
 
             md_index = np.random.choice(range(len(self.student_hist_models)),1,p=self.sampling_dist(len(self.student_hist_models),strategy=self.args.sampling_strategy))[0]
-            if np.random.random() < self.args.historical_averaging:
+            if np.random.random() < self.args.historical_averaging and not self.args.intra:
                 md = copy.deepcopy(self.student_hist_models[md_index])
             else:
                 md = self.student_hist_models[md_index]
@@ -156,6 +157,7 @@ class TeacherDoorKeyEnv(DoorKeyEnv):
                 algo = torch_ac.PPOAlgo(envs, md, device, self.args.frames_per_proc, self.args.discount, self.args.lr, self.args.gae_lambda,
                                         self.args.entropy_coef, self.args.value_loss_coef, self.args.max_grad_norm, self.args.recurrence,
                                         self.args.optim_eps, self.args.clip_eps, self.args.epochs, self.args.batch_size, self.preprocess_obss)
+                algo.args = self.args
                 update_start_time = time.time()
                 exps, logs1 = algo.collect_experiences()
                 logs2 = algo.update_parameters(exps)
@@ -166,8 +168,14 @@ class TeacherDoorKeyEnv(DoorKeyEnv):
                 update += 1
                 print(update, end=",")
 
-                if np.random.random() < self.args.historical_averaging:
-                    self.student_hist_models.append(md)
+                # status = {"num_frames": num_frames, "update": update,
+                #           "model_state": md.state_dict(), "optimizer_state": algo.optimizer.state_dict()}
+                # if hasattr(self.preprocess_obss, "vocab"):
+                #     status["vocab"] = self.preprocess_obss.vocab.vocab
+                # utils.save_status(status, self.model_dir)
+                self.student_hist_models.append(copy.deepcopy(md))
+                if np.random.random() < self.args.historical_averaging and not self.args.intra:
+                    # self.student_hist_models.append(md)
                     md_index = np.random.choice(range(len(self.student_hist_models)),1,p=self.sampling_dist(len(self.student_hist_models),strategy=self.args.sampling_strategy))[0]
                     md = copy.deepcopy(self.student_hist_models[md_index])
 
