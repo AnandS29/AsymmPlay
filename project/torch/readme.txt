@@ -40,3 +40,14 @@ python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10
 python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 50 --t_iters 10 --s_iters_per_teaching 5 --model t_ha_11_27_1_3_o_2 --teacher_algo a2c --student_algo ppo --historical_averaging 0.2 --seed 2
 
 python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 10 --t_iters 0 --s_iters_per_teaching 5 --model eval_test_1 --teacher_algo a2c --student_algo ppo
+
+python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 5 --t_iters 2 --s_iters_per_teaching 2 -t 3 1 -e 1 3 --model eval_test_3 --teacher_algo a2c --student_algo ppo
+
+Test:
+python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 50 --model nt2 --teacher_algo a2c --student_algo ppo -t 1 3 -e 3 1
+
+python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 50 --t_iters 10 --s_iters_per_teaching 5 --model t2 --teacher_algo a2c --student_algo ppo -t 1 3 -e 3 1
+
+python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 50 --t_iters 10 --s_iters_per_teaching 5 --model t_ha2 --teacher_algo a2c --student_algo ppo --historical_averaging 0.2 -t 1 3 -e 3 1
+
+python3 -m scripts.train --env MiniGrid-TeacherDoorKey-5x5-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 50 --t_iters 10 --s_iters_per_teaching 5 --model t_ha_exp2 --teacher_algo a2c --student_algo ppo --historical_averaging 0.2 -t 1 3 -e 3 1
