@@ -305,6 +305,7 @@ if args.t_iters > 0:
     teacher_env.close()
     print("Done teaching")
 
+acmodel = teacher_env.student_hist_models[-1]
 
 if args.nt_iters > 0:
     update = 0
@@ -362,15 +363,15 @@ if args.nt_iters > 0:
                 "U {} | F {:06} | FPS {:04.0f} | D {} | rR:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | F:μσmM {:.1f} {:.1f} {} {} | H {:.3f} | V {:.3f} | pL {:.3f} | vL {:.3f} | ∇ {:.3f}"
                 .format(*data))
 
-            if update % args.eval_interval == 0:
+            # if update % args.eval_interval == 0:
                 print("Running eval ...")
                 eval_rets = run_eval()
 
                 header += ["eval_return_" + key for key in return_per_episode.keys()]
                 data += return_per_episode.values()
 
-            header += ["return_" + key for key in eval_rets.keys()]
-            data += eval_rets.values()
+            # header += ["return_" + key for key in eval_rets.keys()]
+            # data += eval_rets.values()
 
             if status["num_frames"] == 0:
                 csv_logger.writerow(header)
