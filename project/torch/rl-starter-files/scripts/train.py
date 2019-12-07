@@ -96,7 +96,7 @@ parser.add_argument("--argmax", action="store_true", default=False,
                     help="action with highest probability is selected")
 parser.add_argument("--worst-episodes-to-show", type=int, default=10,
                     help="how many worst episodes to show")
-parser.add_argument("--episodes", type=int, default=10, help="number of episodes of evaluation (default: 10)")
+parser.add_argument("--episodes", type=int, default=100, help="number of episodes of evaluation (default: 100)")
 
 args = parser.parse_args()
 
@@ -363,7 +363,7 @@ if args.nt_iters > 0:
                 "U {} | F {:06} | FPS {:04.0f} | D {} | rR:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | F:μσmM {:.1f} {:.1f} {} {} | H {:.3f} | V {:.3f} | pL {:.3f} | vL {:.3f} | ∇ {:.3f}"
                 .format(*data))
 
-            # if update % args.eval_interval == 0:
+            if update % args.eval_interval == 0 and False:
                 print("Running eval ...")
                 eval_rets = run_eval()
 

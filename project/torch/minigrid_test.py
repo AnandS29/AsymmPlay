@@ -21,7 +21,7 @@ for i_episode in range(10):
     observation = env.reset()
     for t in range(1000):
         env.render()
-        if t > 2:
+        if t > 0:
             time.sleep(10)
         action = env.action_space.sample()
         observation, reward, done, info = env.step(action)
