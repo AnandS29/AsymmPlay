@@ -279,23 +279,29 @@ if args.t_iters > 0:
     teacher_hist_models = [teach_acmodel]
 
     print("Starting to teach")
-    if np.random.random() < args.historical_averaging and not args.intra:
-        md = copy.deepcopy(teach_acmodel)
-    else:
-        md = teach_acmodel
+    # if np.random.random() < args.historical_averaging and not args.intra:
+    #     md = copy.deepcopy(teach_acmodel)
+    # else:
+    #     md = teach_acmodel
+    md = teach_acmodel
 
     while j < args.t_iters:
         algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, 10, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                 args.optim_alpha, args.optim_eps, preprocess_obss)
         algo_teacher.args = args
+
+        if args.intra:
+            algo_teacher.historical_models = teacher_hist_models
+
         exps, logs1 = algo_teacher.collect_experiences()
         logs2 = algo_teacher.update_parameters(exps)
         j += 1
 
         #run_eval()
 
-        teacher_hist_models.append(copy.deepcopy(md))
+        if not args.intra:
+            teacher_hist_models.append(copy.deepcopy(md))
         if np.random.random() < args.historical_averaging and not args.intra:
             md_index = np.random.choice(range(len(teacher_hist_models)),1,p=sampling_dist(len(teacher_hist_models)))[0]
             md = copy.deepcopy(teacher_hist_models[md_index])
@@ -363,7 +369,7 @@ if args.nt_iters > 0:
                 "U {} | F {:06} | FPS {:04.0f} | D {} | rR:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | F:μσmM {:.1f} {:.1f} {} {} | H {:.3f} | V {:.3f} | pL {:.3f} | vL {:.3f} | ∇ {:.3f}"
                 .format(*data))
 
-            if update % args.eval_interval == 0 and False:
+            if update % args.eval_interval == 0:
                 print("Running eval ...")
                 eval_rets = run_eval()
 

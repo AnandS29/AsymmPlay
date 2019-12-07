@@ -145,12 +145,12 @@ class TeacherDoorKeyEnv(DoorKeyEnv):
             update = 0
             num_frames = 0
 
-            md_index = np.random.choice(range(len(self.student_hist_models)),1,p=self.sampling_dist(len(self.student_hist_models),strategy=self.args.sampling_strategy))[0]
-            if np.random.random() < self.args.historical_averaging and not self.args.intra:
-                md = copy.deepcopy(self.student_hist_models[md_index])
-            else:
-                md = self.student_hist_models[md_index]
-
+            # md_index = np.random.choice(range(len(self.student_hist_models)),1,p=self.sampling_dist(len(self.student_hist_models),strategy=self.args.sampling_strategy))[0]
+            # if np.random.random() < self.args.historical_averaging and not self.args.intra:
+            #     md = copy.deepcopy(self.student_hist_models[md_index])
+            # else:
+            #     md = self.student_hist_models[md_index]
+            md = self.student_hist_models[-1]
             # while num_frames < self.args.frames and update<5:
             while update < self.args.s_iters_per_teaching:
                 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -158,6 +158,8 @@ class TeacherDoorKeyEnv(DoorKeyEnv):
                                         self.args.entropy_coef, self.args.value_loss_coef, self.args.max_grad_norm, self.args.recurrence,
                                         self.args.optim_eps, self.args.clip_eps, self.args.epochs, self.args.batch_size, self.preprocess_obss)
                 algo.args = self.args
+                if self.args.intra:
+                    algo.historical_models = self.student_hist_models
                 update_start_time = time.time()
                 exps, logs1 = algo.collect_experiences()
                 logs2 = algo.update_parameters(exps)
@@ -173,7 +175,8 @@ class TeacherDoorKeyEnv(DoorKeyEnv):
                 # if hasattr(self.preprocess_obss, "vocab"):
                 #     status["vocab"] = self.preprocess_obss.vocab.vocab
                 # utils.save_status(status, self.model_dir)
-                self.student_hist_models.append(copy.deepcopy(md))
+                if not self.args.intra:
+                    self.student_hist_models.append(copy.deepcopy(md))
                 if np.random.random() < self.args.historical_averaging and not self.args.intra:
                     # self.student_hist_models.append(md)
                     md_index = np.random.choice(range(len(self.student_hist_models)),1,p=self.sampling_dist(len(self.student_hist_models),strategy=self.args.sampling_strategy))[0]

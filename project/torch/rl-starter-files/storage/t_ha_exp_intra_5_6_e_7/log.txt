@@ -1,0 +1,37 @@
+/Users/anandsranjan/Desktop/AsymmPlay/project/torch/rl-starter-files/scripts/train.py --env MiniGrid-TeacherDoorKey-10x10-v0 --save-interval 10 --frames 80000 --procs 8 --nt_iters 50 --t_iters 10 --s_iters_per_teaching 5 --model t_ha_exp_intra_5_6_e_7 --teacher_algo a2c --student_algo ppo --historical_averaging 0.2 -t 5 1 -e 5 6 --sampling_strategy exponential --eval-interval 5 --intra
+
+Namespace(argmax=False, batch_size=256, clip_eps=0.2, discount=0.99, entropy_coef=0.01, env='MiniGrid-TeacherDoorKey-10x10-v0', episodes=100, epochs=4, eval_goal=[5, 6], eval_interval=5, frames=80000, frames_per_proc=None, frames_teacher=10, gae_lambda=0.95, historical_averaging=0.2, intra=True, log_interval=1, lr=0.001, max_grad_norm=0.5, mem=False, model='t_ha_exp_intra_5_6_e_7', nt_iters=50, optim_alpha=0.99, optim_eps=1e-08, procs=8, rand_goal=False, recurrence=1, s_iters_per_teaching=5, sampling_strategy='exponential', save_interval=10, seed=1, student_algo='ppo', t_iters=10, teacher_algo='a2c', teacher_model=None, text=False, train_goal=[5, 1], value_loss_coef=0.5, worst_episodes_to_show=10)
+
+Device: {device}
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 16, kernel_size=(2, 2), stride=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
+    (3): Conv2d(16, 32, kernel_size=(2, 2), stride=(1, 1))
+    (4): ReLU()
+    (5): Conv2d(32, 64, kernel_size=(2, 2), stride=(1, 1))
+    (6): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
