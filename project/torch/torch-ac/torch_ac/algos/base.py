@@ -128,11 +128,8 @@ class BaseAlgo(ABC):
             reward, policy loss, value loss, etc.
         """
 
-        md_index = np.random.choice(range(len(self.historical_models)),1)[0]
-        if np.random.random() < self.args.historical_averaging and self.args.intra:
-            self.ac_model = copy.deepcopy(self.historical_models[md_index])
-        else:
-            self.ac_model = self.historical_models[-1]
+        if self.args.intra:
+            self.acmodel = self.historical_models[-1]
 
         for i in range(self.num_frames_per_proc):
             # Do one agent-environment interaction
@@ -186,10 +183,12 @@ class BaseAlgo(ABC):
             self.log_episode_reshaped_return *= self.mask
             self.log_episode_num_frames *= self.mask
 
+            if self.args.intra:
+                self.historical_models.append(copy.deepcopy(self.acmodel))
             if np.random.random() < self.args.historical_averaging and self.args.intra:
-                self.historical_models.append(md)
-                md_index = np.random.choice(range(len(self.student_hist_models)),1,p=self.sampling_dist(len(self.student_hist_models),strategy=self.args.sampling_strategy))[0]
-                md = copy.deepcopy(self.student_hist_models[md_index])
+                dist = self.sampling_dist(len(self.historical_models),strategy=self.args.sampling_strategy)
+                md_index = np.random.choice(range(len(self.historical_models)),1,p=dist)[0]
+                md = copy.deepcopy(self.historical_models[md_index])
 
         # Add advantage and return to experiences
 
