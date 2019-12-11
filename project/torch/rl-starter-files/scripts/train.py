@@ -314,7 +314,7 @@ if args.t_iters > 0:
     md = teach_acmodel
 
     while j < args.t_iters:
-        # Sandy added diff algo argument
+        # Sandy: added diff teacher algo arguments
         if args.teacher_algo == "a2c":
             algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, 10, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
@@ -359,9 +359,20 @@ if args.nt_iters > 0:
         env.is_teaching = False
         env.end_pos = args.train_goal
         envs.append(env)
-    algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
-                                args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
+
+    # Sandy: added student algo
+    if args.student_algo == "a2c":
+        algo = torch_ac.A2CAlgo([teacher_env], md, device, 10, args.discount, args.lr, args.gae_lambda,
+                            args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+                            args.optim_alpha, args.optim_eps, preprocess_obss)
+    elif args.student_algo == "ppo":
+        algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+                        args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+                        args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
+    else:
+        raise ValueError("Incorrect algorithm name: {}".format(args.algo))
+    # END
+
     algo.args = args
     #while (num_frames < args.frames) and update < 28:
     while update < args.nt_iters:
