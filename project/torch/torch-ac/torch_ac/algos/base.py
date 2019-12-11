@@ -183,8 +183,6 @@ class BaseAlgo(ABC):
             self.log_episode_reshaped_return *= self.mask
             self.log_episode_num_frames *= self.mask
 
-            if self.args.intra:
-                self.historical_models.append(copy.deepcopy(self.acmodel))
             if np.random.random() < self.args.historical_averaging and self.args.intra:
                 dist = self.sampling_dist(len(self.historical_models),strategy=self.args.sampling_strategy)
                 md_index = np.random.choice(range(len(self.historical_models)),1,p=dist)[0]
@@ -251,6 +249,9 @@ class BaseAlgo(ABC):
         self.log_return = self.log_return[-self.num_procs:]
         self.log_reshaped_return = self.log_reshaped_return[-self.num_procs:]
         self.log_num_frames = self.log_num_frames[-self.num_procs:]
+
+        if self.args.intra and self.args.historical_averaging != 0:
+            self.historical_models.append(copy.deepcopy(self.acmodel))
 
         return exps, logs
 

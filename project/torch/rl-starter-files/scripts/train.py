@@ -197,10 +197,18 @@ teacher_env.preprocess_obss = preprocess_obss
 
 def run_eval():
     envs = []
-    for i in range(1):
-        env = utils.make_env(args.env, args.seed + 10000 * i)
+    for i in range(8):
+        # env = utils.make_env(args.env, args.seed + 10000 * i)
+        env = utils.make_env(args.env, args.seed)
         env.is_teaching = False
-        env.end_pos = args.eval_goal
+        if args.rand_goal:
+            pos = env._rand_pos(0, env.width, 0, env.height)
+            while env.grid.get(*pos) is None:
+                pos = env._rand_pos(0, env.width, 0, env.height)
+            eval = list(pos)
+        else:
+            eval = args.eval_goal
+        env.end_pos = eval
         envs.append(env)
     env = ParallelEnv(envs)
 
@@ -286,7 +294,7 @@ if args.t_iters > 0:
     md = teach_acmodel
 
     while j < args.t_iters:
-        algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, 10, args.discount, args.lr, args.gae_lambda,
+        algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, args.frames_teacher, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                 args.optim_alpha, args.optim_eps, preprocess_obss)
         algo_teacher.args = args
@@ -373,8 +381,8 @@ if args.nt_iters > 0:
                 print("Running eval ...")
                 eval_rets = run_eval()
 
-                header += ["eval_return_" + key for key in return_per_episode.keys()]
-                data += return_per_episode.values()
+                header += ["eval_return_" + key for key in eval_rets.keys()]
+                data += eval_rets.values()
 
             # header += ["return_" + key for key in eval_rets.keys()]
             # data += eval_rets.values()
