@@ -22,6 +22,8 @@ parser.add_argument("--teacher_algo", required=True,
                     help="algorithm to use: a2c | ppo (REQUIRED)")
 parser.add_argument("--student_algo", required=True,
                     help="algorithm to use: a2c | ppo (REQUIRED)")
+# Sandy: kinda implemented not sure if right; probably wrong
+
 parser.add_argument("--env", required=True,
                     help="name of the environment to train on (REQUIRED)")
 parser.add_argument("--model", default=None,
@@ -49,6 +51,8 @@ parser.add_argument("--nt_iters", type=int, default=0,
 
 parser.add_argument("--rand_goal", action="store_true", default=False,
                     help="use random goals for evaluation")
+# Sandy: not yet implemented and need to be implemented
+
 parser.add_argument('-e','--eval_goal', nargs='+', type=int, default=[3,1], help='evaluation goal', required=False)
 parser.add_argument('-t','--train_goal', nargs='+', type=int, default=[1,3], help='training goal', required=True)
 
@@ -171,18 +175,42 @@ acmodel.to(device)
 txt_logger.info("Model loaded\n")
 txt_logger.info("{}\n".format(acmodel))
 
-# Load algo
 
-# if args.algo == "a2c":
-#     algo = torch_ac.A2CAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+
+# Load teacher algo
+
+# if args.teacher_algo == "a2c":
+#     teacher_algo = torch_ac.A2CAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
 #                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
 #                             args.optim_alpha, args.optim_eps, preprocess_obss)
-# elif args.algo == "ppo":
-#     algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+# elif args.teacher_algo == "ppo":
+#     teacher_algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
 #                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
 #                             args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
 # else:
 #     raise ValueError("Incorrect algorithm name: {}".format(args.algo))
+
+# End teacher algo
+
+
+
+# Load student_algo
+
+# if args.student_algo == "a2c":
+#     student_algo = torch_ac.A2CAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+#                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+#                             args.optim_alpha, args.optim_eps, preprocess_obss)
+# elif args.student_algo == "ppo":
+#     student_algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+#                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+#                             args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
+# else:
+#     raise ValueError("Incorrect algorithm name: {}".format(args.algo))
+
+# End student_algo
+
+
+
 
 if "optimizer_state" in status and False:
     algo.optimizer.load_state_dict(status["optimizer_state"])
@@ -190,7 +218,7 @@ txt_logger.info("Optimizer loaded\n")
 
 student_hist_models = [acmodel]
 teacher_env.student_hist_models = student_hist_models
-# teacher_env.algo = algo
+# teacher_env.algo = teacher_algo # Sandy added
 teacher_env.args = args
 teacher_env.model_dir = model_dir
 teacher_env.preprocess_obss = preprocess_obss
@@ -294,9 +322,19 @@ if args.t_iters > 0:
     md = teach_acmodel
 
     while j < args.t_iters:
-        algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, args.frames_teacher, args.discount, args.lr, args.gae_lambda,
+        # Sandy: added diff teacher algo arguments
+        if args.teacher_algo == "a2c":
+            algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, 10, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                 args.optim_alpha, args.optim_eps, preprocess_obss)
+        elif args.teacher_algo == "ppo":
+            algo_teacher = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+                            args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+                            args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
+        else:
+            raise ValueError("Incorrect algorithm name: {}".format(args.algo))
+        # END
+
         algo_teacher.args = args
 
         if args.intra:
@@ -329,9 +367,20 @@ if args.nt_iters > 0:
         env.is_teaching = False
         env.end_pos = args.train_goal
         envs.append(env)
-    algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
-                                args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
+
+    # Sandy: added student algo
+    if args.student_algo == "a2c":
+        algo = torch_ac.A2CAlgo([teacher_env], md, device, 10, args.discount, args.lr, args.gae_lambda,
+                            args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+                            args.optim_alpha, args.optim_eps, preprocess_obss)
+    elif args.student_algo == "ppo":
+        algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+                        args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+                        args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
+    else:
+        raise ValueError("Incorrect algorithm name: {}".format(args.algo))
+    # END
+
     algo.args = args
     #while (num_frames < args.frames) and update < 28:
     while update < args.nt_iters:
