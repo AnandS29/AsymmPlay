@@ -287,11 +287,11 @@ if args.t_iters > 0:
     while j < args.t_iters:
         # Add options for teacher algo
         if args.teacher_algo == "a2c":
-            algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+            algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, args.frames_teacher, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                 args.optim_alpha, args.optim_eps, preprocess_obss)
         elif args.teacher_algo == "ppo":
-            algo_teacher = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+            algo_teacher = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_teacher, args.discount, args.lr, args.gae_lambda,
                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                             args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
         else:
