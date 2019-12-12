@@ -280,9 +280,13 @@ if args.t_iters > 0:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         # Add options for teacher algo
         if args.teacher_algo == "a2c":
             algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, args.frames_teacher, args.discount, args.lr, args.gae_lambda,
+=======
+        algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, 10, args.discount, args.lr, args.gae_lambda,
+>>>>>>> parent of 24d665c... random goal for eval
 =======
         algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, 10, args.discount, args.lr, args.gae_lambda,
 >>>>>>> parent of 24d665c... random goal for eval
