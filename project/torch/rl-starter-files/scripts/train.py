@@ -175,43 +175,6 @@ acmodel.to(device)
 txt_logger.info("Model loaded\n")
 txt_logger.info("{}\n".format(acmodel))
 
-
-
-# Load teacher algo
-
-# if args.teacher_algo == "a2c":
-#     teacher_algo = torch_ac.A2CAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
-#                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-#                             args.optim_alpha, args.optim_eps, preprocess_obss)
-# elif args.teacher_algo == "ppo":
-#     teacher_algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
-#                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-#                             args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
-# else:
-#     raise ValueError("Incorrect algorithm name: {}".format(args.algo))
-
-# End teacher algo
-
-
-
-# Load student_algo
-
-# if args.student_algo == "a2c":
-#     student_algo = torch_ac.A2CAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
-#                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-#                             args.optim_alpha, args.optim_eps, preprocess_obss)
-# elif args.student_algo == "ppo":
-#     student_algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
-#                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-#                             args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
-# else:
-#     raise ValueError("Incorrect algorithm name: {}".format(args.algo))
-
-# End student_algo
-
-
-
-
 if "optimizer_state" in status and False:
     algo.optimizer.load_state_dict(status["optimizer_state"])
 txt_logger.info("Optimizer loaded\n")
@@ -322,9 +285,9 @@ if args.t_iters > 0:
     md = teach_acmodel
 
     while j < args.t_iters:
-        # Sandy: added diff teacher algo arguments
+        # Add options for teacher algo
         if args.teacher_algo == "a2c":
-            algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, 10, args.discount, args.lr, args.gae_lambda,
+            algo_teacher = torch_ac.A2CAlgo([teacher_env], md, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                 args.optim_alpha, args.optim_eps, preprocess_obss)
         elif args.teacher_algo == "ppo":
@@ -333,7 +296,7 @@ if args.t_iters > 0:
                             args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
         else:
             raise ValueError("Incorrect algorithm name: {}".format(args.algo))
-        # END
+        # END Add options for teacher algo
 
         algo_teacher.args = args
 
@@ -368,13 +331,13 @@ if args.nt_iters > 0:
         env.end_pos = args.train_goal
         envs.append(env)
 
-    # Sandy: added student algo
+    # Add options for student algo
     if args.student_algo == "a2c":
-        algo = torch_ac.A2CAlgo([teacher_env], md, device, 10, args.discount, args.lr, args.gae_lambda,
+        algo = torch_ac.A2CAlgo(envs, md, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                             args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                             args.optim_alpha, args.optim_eps, preprocess_obss)
     elif args.student_algo == "ppo":
-        algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+        algo = torch_ac.PPOAlgo(envs, md, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                         args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                         args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
     else:
