@@ -175,7 +175,7 @@ class TeacherDoorKeyEnv(DoorKeyEnv):
                 # if hasattr(self.preprocess_obss, "vocab"):
                 #     status["vocab"] = self.preprocess_obss.vocab.vocab
                 # utils.save_status(status, self.model_dir)
-                if not self.args.intra and self.args.historical_averaging != 0:
+                if not self.args.intra:
                     self.student_hist_models.append(copy.deepcopy(md))
                 if np.random.random() < self.args.historical_averaging and not self.args.intra:
                     # self.student_hist_models.append(md)
