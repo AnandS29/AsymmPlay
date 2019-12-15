@@ -483,7 +483,7 @@ if n > 0:
 
 # Heatmap
 grid = np.zeros((s,s))
-positions = [(i,j) for i,j in positions]
+positions = [(j,i) for i,j in positions]
 counts = Counter(positions)
 for i in range(s):
     for j in range(s):
