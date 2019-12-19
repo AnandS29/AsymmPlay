@@ -2,6 +2,15 @@
 
 Main folder: AsymmPlay/project/torch/
 
-Install local versions (pip -e .) gym-minigrid, torch, rl-starter-files
+Using Anaconda, install our environment running 
+```bash
+conda env create -f environment.yml
+```
+
+Install local versions by cd into each folders: gym-minigrid, torch, rl-starter-files and run
+```bash
+pip install -e .
+```
 
 Example tests can be found in AsymmPlay/project/torch/readme.txt .
+
