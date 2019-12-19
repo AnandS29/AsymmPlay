@@ -2,7 +2,7 @@
 
 Main folder: AsymmPlay/project/torch/
 
-Using Anaconda, install our environment running 
+Using Anaconda, install our environment by running
 ```bash
 conda env create -f environment.yml
 ```
